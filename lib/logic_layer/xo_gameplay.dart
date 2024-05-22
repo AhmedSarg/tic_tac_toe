@@ -26,22 +26,25 @@ class XOGamePlay {
   bool _haltGame = false;
   GameStatus _status = GameStatus.ongoing;
 
-  Player _currentPlayerRole = Player.playerA;
+  Player _currentPlayerRole;
 
   XOGamePlay(
-      this._playerAMode,
-      this._playerBMode,
-      this._playerAChoice,
-      this._playerBChoice,
-      this._grid,
-      this.onGameEnd,
-      this._winnerTiles,
-      this._history);
+    this._playerAMode,
+    this._playerBMode,
+    this._playerAChoice,
+    this._playerBChoice,
+    this._grid,
+    this.onGameEnd,
+    this._winnerTiles,
+    this._history,
+    this._currentPlayerRole,
+  );
 
   factory XOGamePlay.start({
     required PersonMode playerA,
     required PersonMode playerB,
     required PlayerMode playerAChoice,
+    Player startPlayer = Player.playerA,
     required void Function(XOGamePlay gamePlay) onGameEnd,
   }) {
     assert(playerAChoice != PlayerMode.naN);
@@ -54,6 +57,7 @@ class XOGamePlay {
       onGameEnd,
       List.empty(growable: true),
       PlayHistory(List.empty(growable: true)),
+      startPlayer,
     );
   }
 

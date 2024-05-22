@@ -61,7 +61,7 @@ void test1() {
 void main() {
   //test watch mode
   XOGamePlay gamePlay = XOGamePlay.start(
-    playerA: PersonMode.machineHard,
+    playerA: PersonMode.machineRandom,
     playerB: PersonMode.machineHard,
     playerAChoice: PlayerMode.o,
     onGameEnd: (gamePlay) {
@@ -78,6 +78,7 @@ void main() {
   );
 
   var history = gamePlay.watchAIvsAI();
+
   for (var item in history.history) {
     item.displayToConsole();
   }
