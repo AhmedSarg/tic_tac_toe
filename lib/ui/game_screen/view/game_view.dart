@@ -12,11 +12,8 @@ import '../../resources/app_colors.dart';
 class GameView extends StatelessWidget {
   const GameView({super.key});
 
-  static late GameViewModel viewModel;
-
   @override
   Widget build(BuildContext context) {
-    viewModel = GameViewModel.get(context);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Center(
@@ -30,66 +27,92 @@ class GameView extends StatelessWidget {
                 child: XOGridView(),
               ),
             ),
-            viewModel.xoGamePlay.getGameStatus() == GameStatus.ongoing
-                ? Container(
-                    margin: const EdgeInsets.only(top: 50),
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: viewModel.restart,
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Text(
-                        'Restart',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ),
-                  )
-                : Column(
-                    children: [
-                      const Text(''),
-                      Container(
-                        margin: const EdgeInsets.only(top: 50),
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: viewModel.restart,
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+            BlocBuilder<GameViewModel, GameStates>(
+              builder: (context, state) {
+                GameViewModel viewModel = GameViewModel.get(context);
+                return SizedBox(
+                  height: 210,
+                  child: viewModel.xoGamePlay.getGameStatus() ==
+                          GameStatus.ongoing
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 50),
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: viewModel.restart,
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              child: Text(
+                                'Restart',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
                             ),
                           ),
-                          child: Text(
-                            'Restart',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 50),
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: viewModel.restart,
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                        )
+                      : Column(
+                          children: [
+                            FittedBox(
+                              child: Text(
+                                viewModel.result,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge
+                                    ?.copyWith(
+                                      color: viewModel.resultColor,
+                                    ),
+                              ),
                             ),
-                          ),
-                          child: Text(
-                            'Restart',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: viewModel.restart,
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Play Again',
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Main Menu',
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -117,6 +140,7 @@ class XOGridView extends StatelessWidget {
               crossAxisSpacing: spacing,
               mainAxisSpacing: spacing,
             ),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: viewModel.items.length,
             padding: EdgeInsets.zero,

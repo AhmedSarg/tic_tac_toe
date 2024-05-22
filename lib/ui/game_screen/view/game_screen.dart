@@ -13,16 +13,7 @@ class GameScreen extends StatelessWidget {
       body: BlocProvider(
         create: (context) => GameViewModel()..start(),
         child: BlocConsumer<GameViewModel, GameStates>(
-          listener: (context, state) {
-            if (state is WinState) {
-              showDialog(
-                context: context,
-                builder: (context) => const AlertDialog(
-                  content: Text('You Win'),
-                ),
-              );
-            }
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             return buildContent();
           },
