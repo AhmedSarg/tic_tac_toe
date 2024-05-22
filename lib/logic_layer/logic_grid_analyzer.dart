@@ -10,9 +10,6 @@ class LogicGridAnalyzer {
     PlayerMode winner = PlayerMode.naN;
     winTiles.clear();
 
-    //todo return the tiles which make the player win
-    //todo make code faster by skip the next loops when a player win
-
     //check horizontal
     for (int i = 0; i < gridHeight; i++) {
       if (grid.getTile(i, 0) == grid.getTile(i, 1) &&

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'logic_constants.dart';
 
 bool checkPosition(int i, j) {
@@ -6,4 +8,8 @@ bool checkPosition(int i, j) {
   } else {
     return false;
   }
+}
+
+T getRandom<T>(List<T> items) {
+  return items[Random.secure().nextInt(items.length)];
 }

@@ -1,6 +1,7 @@
 import 'logic_constants.dart';
 import 'logic_enums.dart';
 import 'logic_extensions.dart';
+import 'logic_funtions.dart';
 import 'logic_grid.dart';
 import 'logic_grid_analyzer.dart';
 import 'logic_position.dart';
@@ -16,6 +17,12 @@ class TicTacTocAI {
     List<GridPos> available = _getAvailableMovements(grid);
     int modeLvl = mode.getLevelNum();
     GridPos? result;
+
+    //winner method link:- https://www.facebook.com/watch/?mibextid=w8EBqM&v=335121298155996&rdid=suAuBrZEz6cPtTql
+    //random n    intermediate n       hard y
+    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
+      result ??= _tryWinnerMethod(grid.clone(), self, List.of(available));
+    }
 
     //check if self win
     //random n    intermediate y       hard y
@@ -133,5 +140,31 @@ class TicTacTocAI {
       }
     }
     return null;
+  }
+
+  static GridPos? _tryWinnerMethod(
+      PlayGrid grid, PlayerMode self, List<GridPos> available) {
+    if (available.length == 9) {
+      //grid is empty
+      return GridPos(1, 1);
+    } else if (available.length == 7 && (grid.getTile(1, 1) == self)) {
+      //the plan is ok
+      if (grid.getTile(0, 0) == self.opposite()) return GridPos(2, 1);
+      if (grid.getTile(0, 1) == self.opposite())
+        return getRandom([GridPos(2, 0), GridPos(2, 2)]);
+      if (grid.getTile(0, 2) == self.opposite()) return GridPos(1, 0);
+
+      if (grid.getTile(1, 0) == self.opposite())
+        return getRandom([GridPos(0, 2), GridPos(2, 2)]);
+      if (grid.getTile(1, 2) == self.opposite())
+        return getRandom([GridPos(0, 0), GridPos(2, 0)]);
+
+      if (grid.getTile(2, 0) == self.opposite()) return GridPos(1, 2);
+      if (grid.getTile(2, 1) == self.opposite())
+        return getRandom([GridPos(0, 0), GridPos(0, 2)]);
+      if (grid.getTile(2, 2) == self.opposite()) return GridPos(0, 1);
+    } else {
+      return null;
+    }
   }
 }

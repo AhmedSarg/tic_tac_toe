@@ -8,9 +8,8 @@ import 'logic_layer/xo_gameplay.dart';
 
 void main() {
   XOGamePlay gamePlay = XOGamePlay.start(
-    playerA: PersonMode.machineHard
-    ,
-    playerB: PersonMode.machineHard,
+    playerA: PersonMode.machineHard,
+    playerB: PersonMode.human,
     playerAChoice: PlayerMode.o,
     onGameEnd: (gamePlay) {
       print("\n" * 2);
@@ -20,6 +19,7 @@ void main() {
       print("Game Stopped: \t${gamePlay.isGameStopped()}");
       print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
       print("Current Role: \t${gamePlay.getCurrentChoice()}");
+      print("Winner Tiles: \t${gamePlay.getWinnerTiles()}");
       print("-" * 30);
     },
   );
