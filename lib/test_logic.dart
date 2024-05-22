@@ -8,10 +8,9 @@ import 'logic_layer/xo_gameplay.dart';
 
 void testGamePlay() {
   XOGamePlay gamePlay = XOGamePlay.start(
-    playerA: PlayerMode.human,
-    playerB: PlayerMode.machineHard,
-    startPlayer: Player.playerA,
-    playerAChoice: Choice.o,
+    playerA: PersonMode.human,
+    playerB: PersonMode.machineHard,
+    playerAChoice: PlayerMode.o,
     onGameEnd: (gamePlay) {
       print("\n" * 2);
       print("-" * 30);
