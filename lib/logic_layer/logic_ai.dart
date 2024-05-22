@@ -78,7 +78,8 @@ class TicTacTocAI {
         );
       }
 
-      GameStatus analysis = LogicGridAnalyzer.analyze(grid);
+      GameStatus analysis =
+          LogicGridAnalyzer.analyze(grid, List.empty(growable: true));
       switch (analysis) {
         case GameStatus.winX:
           if (self == PlayerMode.x) return pos;
