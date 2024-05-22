@@ -1,4 +1,4 @@
-import '../logic_layer/logic_enums.dart';
+import 'logic_enums.dart';
 
 class DataIntent {
   static GameMode? _gameMode;

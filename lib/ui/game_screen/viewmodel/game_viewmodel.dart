@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tic_tac_toe/logic/data_intent.dart';
+import 'package:tic_tac_toe/logic_layer/data_intent.dart';
+import 'package:tic_tac_toe/logic_layer/logic_constants.dart';
+import 'package:tic_tac_toe/logic_layer/logic_extensions.dart';
 import 'package:tic_tac_toe/logic_layer/xo_gameplay.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
 
@@ -12,18 +14,44 @@ class GameViewModel extends Cubit<GameStates> {
 
   final List<String> _items = ['', '', '', '', '', '', '', '', ''];
 
-  late final XOGamePlay xoGamePlay;
+  late XOGamePlay xoGamePlay;
 
   PlayerMode _playerMode = DataIntent.getPlayerMode;
 
   List<String> get items => _items;
 
+  int matToVec(int i, int j) {
+    return i * gridWidth + j;
+  }
+
+  (int, int) vecToMat(int i) {
+    return (i ~/ gridWidth, i % gridWidth);
+  }
+
   play(int index) {
     if (_items[index] == '') {
-      _items[index] = _playerMode.name.toUpperCase();
+      int i1 = vecToMat(index).$1;
+      int j1 = vecToMat(index).$2;
+      xoGamePlay.setTile(i1, j1);
+      _items[index] = xoGamePlay.getTile(i1, j1).symbol();
+      xoGamePlay.update();
+      Future.delayed(
+        const Duration(seconds: 1),
+        () {
+          getComputerAnswer();
+        },
+      );
       emit(PlayedState());
-      togglePlayerMode();
     }
+  }
+
+  getComputerAnswer() {
+    for (int ind = 0; ind < _items.length; ind++) {
+      int i2 = vecToMat(ind).$1;
+      int j2 = vecToMat(ind).$2;
+      _items[ind] = xoGamePlay.getTile(i2, j2).symbol();
+    }
+    emit(PlayedState());
   }
 
   togglePlayerMode() {
@@ -37,6 +65,7 @@ class GameViewModel extends Cubit<GameStates> {
   restart() {
     _items.fillRange(0, _items.length, '');
     _playerMode = DataIntent.getPlayerMode;
+    start();
     emit(InitialState());
   }
 
@@ -61,7 +90,27 @@ class GameViewModel extends Cubit<GameStates> {
       playerA: PersonMode.human,
       playerB: opponentMode,
       playerAChoice: _playerMode,
-      onGameEnd: (gameplay) {},
+      onGameEnd: (gameplay) {
+        if (gameplay.getGameStatus() != GameStatus.ongoing &&
+            gameplay.getGameStatus() != GameStatus.draw) {
+          if (gameplay.getGameStatus().name[3] ==
+              _playerMode.symbol().toUpperCase()) {
+            emit(
+              DataIntent.getGameMode == GameMode.single
+                  ? WinState()
+                  : PlayedState(),
+            );
+          } else {
+            emit(
+              DataIntent.getGameMode == GameMode.single
+                  ? LoseState()
+                  : PlayerBWins(),
+            );
+          }
+        } else if (gameplay.getGameStatus() == GameStatus.draw) {
+          emit(DrawState());
+        }
+      },
     );
   }
 }

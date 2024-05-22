@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_viewmodel.dart';
-import 'package:tic_tac_toe/ui/resources/app_colors.dart';
+import 'package:tic_tac_toe/ui/resources/assets_manager.dart';
 
 import '../../../logic_layer/logic_enums.dart';
+import '../../resources/app_colors.dart';
 
 class GameView extends StatelessWidget {
   const GameView({super.key});
@@ -88,16 +90,29 @@ class XOGridView extends StatelessWidget {
                     borderRadius: getTileBorderRadius(index, spacing),
                   ),
                   child: FittedBox(
-                    child: Text(
-                      viewModel.items[index],
-                      style: TextStyle(
-                        fontFamily: GoogleFonts.gabarito().fontFamily,
-                        color: viewModel.items[index].toLowerCase() ==
-                                PlayerMode.x.name
-                            ? AppColors.playerXColor
-                            : AppColors.playerOColor,
-                      ),
-                    ),
+                    child: viewModel.items[index] == ''
+                        ? Text(
+                            viewModel.items[index],
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.gabarito().fontFamily,
+                              color: viewModel.items[index].toLowerCase() ==
+                                      PlayerMode.x.name
+                                  ? AppColors.playerXColor
+                                  : AppColors.playerOColor,
+                            ),
+                          )
+                        : viewModel.items[index] == 'X'
+                            ? Lottie.asset(
+                                AssetsManager.xLottie,
+                                repeat: false,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(100.0),
+                                child: Lottie.asset(
+                                  AssetsManager.oLottie,
+                                  repeat: false,
+                                ),
+                              ),
                   ),
                 ),
               );

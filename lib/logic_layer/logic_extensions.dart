@@ -41,11 +41,11 @@ extension ChoiceNanExt on PlayerMode {
   String symbol() {
     switch (this) {
       case PlayerMode.x:
-        return 'x';
+        return 'X';
       case PlayerMode.o:
-        return 'o';
+        return 'O';
       case PlayerMode.naN:
-        return '-';
+        return '';
     }
   }
 }

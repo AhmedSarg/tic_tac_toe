@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/logic/data_intent.dart';
+import 'package:tic_tac_toe/logic_layer/data_intent.dart';
 import 'package:tic_tac_toe/ui/choice_screen/view/choice_screen.dart';
 import 'package:tic_tac_toe/ui/difficulty_screen/viewmodel/difficulty_viewmodel.dart';
 

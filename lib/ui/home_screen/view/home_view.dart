@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/ui/difficulty_screen/view/difficulty_screen.dart';
 
-import '../../../logic/data_intent.dart';
+import '../../../logic_layer/data_intent.dart';
 import '../../../logic_layer/logic_enums.dart';
 import '../../game_screen/view/game_screen.dart';
 
