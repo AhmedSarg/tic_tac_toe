@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/logic_layer/data_intent.dart';
 import 'package:tic_tac_toe/logic_layer/logic_constants.dart';
 import 'package:tic_tac_toe/logic_layer/logic_extensions.dart';
+import 'package:tic_tac_toe/logic_layer/logic_position.dart';
 import 'package:tic_tac_toe/logic_layer/xo_gameplay.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
@@ -17,6 +18,8 @@ class GameViewModel extends Cubit<GameStates> {
 
   final List<String> _items = ['', '', '', '', '', '', '', '', ''];
 
+  final List<int> _winningTiles = [];
+
   late XOGamePlay xoGamePlay;
 
   PlayerMode _playerMode = DataIntent.getPlayerMode;
@@ -29,7 +32,10 @@ class GameViewModel extends Cubit<GameStates> {
   PlayerMode get playerMode => _playerMode;
 
   String get result => _result;
+
   Color get resultColor => _resultColor;
+
+  List<int> get winningTiles => _winningTiles;
 
   set setResult(String result) {
     _result = result;
@@ -102,8 +108,11 @@ class GameViewModel extends Cubit<GameStates> {
       playerB: opponentMode,
       playerAChoice: _playerMode,
       onGameEnd: (gameplay) {
-        if (gameplay.getGameStatus() != GameStatus.ongoing &&
-            gameplay.getGameStatus() != GameStatus.draw) {
+        _winningTiles.clear();
+        for (GridPos tile in gameplay.getWinnerTiles()) {
+          _winningTiles.add(matToVec(tile.i, tile.j));
+        }
+        if (gameplay.getGameStatus() != GameStatus.draw) {
           if (gameplay.getGameStatus().name[3] ==
               _playerMode.symbol().toUpperCase()) {
             if (DataIntent.getGameMode == GameMode.single) {
