@@ -6,7 +6,7 @@ import 'logic_layer/logic_constants.dart';
 import 'logic_layer/logic_enums.dart';
 import 'logic_layer/xo_gameplay.dart';
 
-void main() {
+void test1() {
   XOGamePlay gamePlay = XOGamePlay.start(
     playerA: PersonMode.machineHard,
     playerB: PersonMode.human,
@@ -56,4 +56,29 @@ void main() {
 
   stdout.write("\n\nEnter key to end");
   stdin.readLineSync();
+}
+
+void main() {
+  //test watch mode
+  XOGamePlay gamePlay = XOGamePlay.start(
+    playerA: PersonMode.machineHard,
+    playerB: PersonMode.machineHard,
+    playerAChoice: PlayerMode.o,
+    onGameEnd: (gamePlay) {
+      print("\n" * 2);
+      print("-" * 30);
+      print("\t\tGame Ended");
+      print("Status: \t\t${gamePlay.getGameStatus()}");
+      print("Game Stopped: \t${gamePlay.isGameStopped()}");
+      print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
+      print("Current Role: \t${gamePlay.getCurrentChoice()}");
+      print("Winner Tiles: \t${gamePlay.getWinnerTiles()}");
+      print("-" * 30);
+    },
+  );
+
+  var history = gamePlay.watchAIvsAI();
+  for (var item in history.history) {
+    item.displayToConsole();
+  }
 }

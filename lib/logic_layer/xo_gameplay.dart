@@ -1,3 +1,5 @@
+import 'package:tic_tac_toe/logic_layer/play_history.dart';
+
 import 'logic_ai.dart';
 import 'logic_enums.dart';
 import 'logic_extensions.dart';
@@ -13,6 +15,8 @@ class XOGamePlay {
   final PlayerMode _playerAChoice;
   final PlayerMode _playerBChoice;
 
+  final PlayHistory _history;
+
   final PlayGrid _grid;
 
   final List<GridPos> _winnerTiles;
@@ -24,8 +28,15 @@ class XOGamePlay {
 
   Player _currentPlayerRole = Player.playerA;
 
-  XOGamePlay(this._playerAMode, this._playerBMode, this._playerAChoice,
-      this._playerBChoice, this._grid, this.onGameEnd, this._winnerTiles);
+  XOGamePlay(
+      this._playerAMode,
+      this._playerBMode,
+      this._playerAChoice,
+      this._playerBChoice,
+      this._grid,
+      this.onGameEnd,
+      this._winnerTiles,
+      this._history);
 
   factory XOGamePlay.start({
     required PersonMode playerA,
@@ -42,6 +53,7 @@ class XOGamePlay {
       PlayGrid.createEmpty(),
       onGameEnd,
       List.empty(growable: true),
+      PlayHistory(List.empty(growable: true)),
     );
   }
 
@@ -62,6 +74,7 @@ class XOGamePlay {
 
     if (isCurrentRoleHuman && _grid.isTileEmpty(i, j)) {
       _grid.forceTile(i, j, currentChoice);
+      _history.snapshotClone(_grid);
       _currentPlayerRole = _currentPlayerRole.opposite();
       return true;
     } else {
@@ -117,7 +130,7 @@ class XOGamePlay {
             mode: currentMode, grid: _grid, self: currentChoice);
 
         _grid.forceTile(movement.i, movement.j, currentChoice);
-
+        _history.snapshotClone(_grid);
         _currentPlayerRole = _currentPlayerRole.opposite();
 
         //check again after ai play
@@ -146,4 +159,15 @@ class XOGamePlay {
   }
 
   List<GridPos> getWinnerTiles() => List.from(_winnerTiles);
+
+  PlayHistory watchAIvsAI() {
+    assert(
+        _playerAMode != PersonMode.human && _playerBMode != PersonMode.human);
+
+    while (isGameStopped() == false) {
+      update();
+    }
+
+    return _history;
+  }
 }
