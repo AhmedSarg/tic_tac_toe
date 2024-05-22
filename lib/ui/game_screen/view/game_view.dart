@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tic_tac_toe/logic/enums.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_viewmodel.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
+
+import '../../../logic_layer/logic_enums.dart';
 
 class GameView extends StatelessWidget {
   const GameView({super.key});

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tic_tac_toe/logic/enums.dart';
 import 'package:tic_tac_toe/ui/choice_screen/viewmodel/choice_states.dart';
 import 'package:tic_tac_toe/ui/choice_screen/viewmodel/choice_viewmodel.dart';
 import 'package:tic_tac_toe/ui/game_screen/view/game_screen.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
+
+import '../../../logic_layer/logic_enums.dart';
 
 class ChoiceView extends StatelessWidget {
   const ChoiceView({super.key});

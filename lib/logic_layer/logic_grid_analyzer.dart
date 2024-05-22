@@ -6,7 +6,7 @@ class LogicGridAnalyzer {
   LogicGridAnalyzer._();
 
   static GameStatus analyze(PlayGrid grid) {
-    Choice winner = Choice.naN;
+    PlayerMode winner = PlayerMode.naN;
 
     //todo return the tiles which make the player win
     //todo make code faster by skip the next loops when a player win
@@ -15,7 +15,7 @@ class LogicGridAnalyzer {
     for (int i = 0; i < gridHeight; i++) {
       if (grid.getTile(i, 0) == grid.getTile(i, 1) &&
           grid.getTile(i, 0) == grid.getTile(i, 2) &&
-          grid.getTile(i, 0) != Choice.naN) {
+          grid.getTile(i, 0) != PlayerMode.naN) {
         winner = grid.getTile(i, 0);
         break;
       }
@@ -25,7 +25,7 @@ class LogicGridAnalyzer {
     for (int j = 0; j < gridWidth; j++) {
       if (grid.getTile(0, j) == grid.getTile(1, j) &&
           grid.getTile(0, j) == grid.getTile(2, j) &&
-          grid.getTile(0, j) != Choice.naN) {
+          grid.getTile(0, j) != PlayerMode.naN) {
         winner = grid.getTile(0, j);
         break;
       }
@@ -34,24 +34,24 @@ class LogicGridAnalyzer {
     //check diagonal
     if (grid.getTile(0, 0) == grid.getTile(1, 1) &&
         grid.getTile(0, 0) == grid.getTile(2, 2) &&
-        grid.getTile(0, 0) != Choice.naN) {
+        grid.getTile(0, 0) != PlayerMode.naN) {
       winner = grid.getTile(0, 0);
     }
 
     //check reverse diagonal
     if (grid.getTile(0, 2) == grid.getTile(2, 0) &&
         grid.getTile(0, 2) == grid.getTile(1, 1) &&
-        grid.getTile(0, 2) != Choice.naN) {
+        grid.getTile(0, 2) != PlayerMode.naN) {
       winner = grid.getTile(0, 2);
     }
 
     //return the result
     switch (winner) {
-      case Choice.x:
+      case PlayerMode.x:
         return GameStatus.winX;
-      case Choice.o:
+      case PlayerMode.o:
         return GameStatus.winO;
-      case Choice.naN:
+      case PlayerMode.naN:
         if (grid.isTotallyFilled()) {
           return GameStatus.draw;
         } else {

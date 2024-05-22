@@ -6,17 +6,17 @@ import 'logic_extensions.dart';
 import 'logic_funtions.dart';
 
 class PlayGrid {
-  final List<List<Choice>> _grid;
+  final List<List<PlayerMode>> _grid;
 
   PlayGrid(this._grid);
 
   PlayGrid.createEmpty()
       : _grid = List.generate(
-            gridHeight, (i) => List.filled(gridWidth, Choice.naN));
+            gridHeight, (i) => List.filled(gridWidth, PlayerMode.naN));
 
   PlayGrid clone() {
-    List<List<Choice>> cloneData = List.generate(
-        gridHeight, (i) => List.filled(gridWidth, Choice.naN));
+    List<List<PlayerMode>> cloneData = List.generate(
+        gridHeight, (i) => List.filled(gridWidth, PlayerMode.naN));
 
     for (int i = 0; i < gridHeight; i++) {
       for (int j = 0; j < gridWidth; j++) {
@@ -27,18 +27,18 @@ class PlayGrid {
     return PlayGrid(cloneData);
   }
 
-  Choice getTile(int i, int j) {
+  PlayerMode getTile(int i, int j) {
     if (checkPosition(i, j)) return _grid[i][j];
-    return Choice.naN;
+    return PlayerMode.naN;
   }
 
-  void forceTile(int i, int j, Choice choice) {
+  void forceTile(int i, int j, PlayerMode choice) {
     if (checkPosition(i, j)) _grid[i][j] = choice;
   }
 
   bool isTileEmpty(int i, int j) {
     if (checkPosition(i, j)) {
-      return (_grid[i][j] == Choice.naN);
+      return (_grid[i][j] == PlayerMode.naN);
     }
     return false;
   }
@@ -57,7 +57,7 @@ class PlayGrid {
   bool isTotallyFilled() {
     for (int i = 0; i < gridHeight; i++) {
       for (int j = 0; j < gridWidth; j++) {
-        if (_grid[i][j] == Choice.naN) return false;
+        if (_grid[i][j] == PlayerMode.naN) return false;
       }
     }
     return true;

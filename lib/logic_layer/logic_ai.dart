@@ -9,9 +9,9 @@ class TicTacTocAI {
   TicTacTocAI._();
 
   static GridPos suggest({
-    required PlayerMode mode,
+    required PersonMode mode,
     required PlayGrid grid,
-    required Choice self,
+    required PlayerMode self,
   }) {
     List<GridPos> available = _getAvailableMovements(grid);
     int modeLvl = mode.getLevelNum();
@@ -19,27 +19,27 @@ class TicTacTocAI {
 
     //check if self win
     //random n    intermediate y       hard y
-    if (modeLvl >= PlayerMode.machineIntermediate.getLevelNum()) {
+    if (modeLvl >= PersonMode.machineIntermediate.getLevelNum()) {
       result ??= _checkIfSelfWin(grid.clone(), self, List.of(available));
     }
 
     //check if another lose
     //random n    intermediate y       hard y
-    if (modeLvl >= PlayerMode.machineIntermediate.getLevelNum()) {
+    if (modeLvl >= PersonMode.machineIntermediate.getLevelNum()) {
       result ??=
           _checkIfSelfWin(grid.clone(), self.opposite(), List.of(available));
     }
 
     //try not to let opponent to make two ways to win
     //random n    intermediate n       hard y
-    if (modeLvl >= PlayerMode.machineHard.getLevelNum()) {
+    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
       result ??=
           _get2WaysToSelfWin(grid.clone(), self.opposite(), List.of(available));
     }
 
     //try to open two ways against opponent
     //random n    intermediate n       hard y
-    if (modeLvl >= PlayerMode.machineHard.getLevelNum()) {
+    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
       result ??= _get2WaysToSelfWin(grid.clone(), self, List.of(available));
     }
 
@@ -66,7 +66,7 @@ class TicTacTocAI {
   }
 
   static GridPos? _checkIfSelfWin(
-      PlayGrid grid, Choice self, List<GridPos> available) {
+      PlayGrid grid, PlayerMode self, List<GridPos> available) {
     for (int i = 0; i < available.length; i++) {
       GridPos pos = available[i];
       grid.forceTile(pos.i, pos.j, self);
@@ -74,16 +74,16 @@ class TicTacTocAI {
         grid.forceTile(
           available[i - 1].i,
           available[i - 1].j,
-          Choice.naN,
+          PlayerMode.naN,
         );
       }
 
       GameStatus analysis = LogicGridAnalyzer.analyze(grid);
       switch (analysis) {
         case GameStatus.winX:
-          if (self == Choice.x) return pos;
+          if (self == PlayerMode.x) return pos;
         case GameStatus.winO:
-          if (self == Choice.o) return pos;
+          if (self == PlayerMode.o) return pos;
         default:
           continue;
       }
@@ -93,7 +93,7 @@ class TicTacTocAI {
   }
 
   static GridPos? _get2WaysToSelfWin(
-      PlayGrid grid, Choice self, List<GridPos> available) {
+      PlayGrid grid, PlayerMode self, List<GridPos> available) {
     for (int i = 0; i < available.length; i++) {
       PlayGrid gridClone = grid.clone();
 

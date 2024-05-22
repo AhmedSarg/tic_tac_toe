@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/logic/data_intent.dart';
-import 'package:tic_tac_toe/logic/enums.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
+
+import '../../../logic_layer/logic_enums.dart';
 
 class GameViewModel extends Cubit<GameStates> {
   GameViewModel() : super(InitialState());
