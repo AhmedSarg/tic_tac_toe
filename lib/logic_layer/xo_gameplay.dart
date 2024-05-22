@@ -20,20 +20,21 @@ class XOGamePlay {
   bool _haltGame = false;
   GameStatus _status = GameStatus.ongoing;
 
-  Player _currentPlayerRole = Player.playerA;
+  Player _currentPlayerRole;
 
   XOGamePlay(this._playerAMode, this._playerBMode, this._playerAChoice,
-      this._playerBChoice, this._grid, this.onGameEnd);
+      this._playerBChoice, this._grid, this.onGameEnd, this._currentPlayerRole);
 
   factory XOGamePlay.start({
     required PlayerMode playerA,
     required PlayerMode playerB,
+    required Player startPlayer,
     required Choice playerAChoice,
     required void Function(XOGamePlay gamePlay) onGameEnd,
   }) {
     assert(playerAChoice != Choice.naN);
     return XOGamePlay(playerA, playerB, playerAChoice, playerAChoice.opposite(),
-        PlayGrid.createEmpty(), onGameEnd);
+        PlayGrid.createEmpty(), onGameEnd, startPlayer);
   }
 
   bool setTile(int i, int j) {

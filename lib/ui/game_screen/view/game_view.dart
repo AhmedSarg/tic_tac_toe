@@ -16,30 +16,38 @@ class GameView extends StatelessWidget {
     viewModel = GameViewModel.get(context);
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const Spacer(),
-          const XOGridView(),
-          const Spacer(),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: viewModel.restart,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: Text(
-                'Restart',
-                style: Theme.of(context).textTheme.labelMedium,
+      child: Center(
+        child: Column(
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 30),
+            const Flexible(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: XOGridView(),
               ),
             ),
-          ),
-          const SizedBox(height: 30),
-        ],
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: viewModel.restart,
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  'Restart',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -47,7 +55,9 @@ class GameView extends StatelessWidget {
 
 class XOGridView extends StatelessWidget {
   const XOGridView({super.key});
+
   final double spacing = 10.0;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GameViewModel, GameStates>(

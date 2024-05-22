@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:tic_tac_toe/logic_layer/logic_extensions.dart';
 
 import 'logic_layer/logic_constants.dart';
@@ -11,6 +10,7 @@ void testGamePlay() {
   XOGamePlay gamePlay = XOGamePlay.start(
     playerA: PlayerMode.human,
     playerB: PlayerMode.machineHard,
+    startPlayer: Player.playerA,
     playerAChoice: Choice.o,
     onGameEnd: (gamePlay) {
       print("\n" * 2);
@@ -52,8 +52,6 @@ void testGamePlay() {
     }
 
     gamePlay.update();
-
-
   }
 
   stdout.write("\n\nEnter key to end");
