@@ -100,11 +100,11 @@ class AppTheme {
       backgroundColor: AppColors.buttonBackgroundColor,
       foregroundColor: AppColors.buttonTextColor,
     ),
-    cardTheme: CardTheme(color: AppColors.buttonBackgroundColor),
-    dividerTheme: DividerThemeData(
+    cardTheme: const CardTheme(color: AppColors.buttonBackgroundColor),
+    dividerTheme: const DividerThemeData(
       color: AppColors.darkPrimaryTextColor,
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: AppColors.darkPrimaryTextColor,
     ),
   );
@@ -212,11 +212,11 @@ class AppTheme {
       backgroundColor: AppColors.darkButtonBackgroundColor,
       foregroundColor: AppColors.darkButtonTextColor,
     ),
-    cardTheme: CardTheme(color: AppColors.scoreboardTextColor),
-    dividerTheme: DividerThemeData(
+    cardTheme: const CardTheme(color: AppColors.scoreboardTextColor),
+    dividerTheme: const DividerThemeData(
       color: AppColors.darkPrimaryTextColor,
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: AppColors.darkPrimaryTextColor,
     ),
   );

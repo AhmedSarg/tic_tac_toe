@@ -80,12 +80,6 @@ class GameViewModel extends Cubit<GameStates> {
     } else {
       opponentMode = PersonMode.machineHard;
     }
-    PlayerMode opponentChoice;
-    if (DataIntent.getPlayerMode == PlayerMode.x) {
-      opponentChoice = PlayerMode.o;
-    } else {
-      opponentChoice = PlayerMode.x;
-    }
     xoGamePlay = XOGamePlay.start(
       playerA: PersonMode.human,
       playerB: opponentMode,

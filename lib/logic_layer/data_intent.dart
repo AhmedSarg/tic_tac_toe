@@ -13,7 +13,7 @@ class DataIntent {
 
   static set setPlayerMode(PlayerMode playerMode) => _playerMode = playerMode;
 
-  static PlayerMode get getPlayerMode => _playerMode!;
+  static PlayerMode get getPlayerMode => _playerMode ?? PlayerMode.x;
 
   //--------------------------------------------------------------------------
 

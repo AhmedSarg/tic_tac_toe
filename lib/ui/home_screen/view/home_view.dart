@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/ui/about_us_screen/view/about_us_view.dart';
 import 'package:tic_tac_toe/ui/difficulty_screen/view/difficulty_screen.dart';
 
 import '../../../logic_layer/data_intent.dart';
@@ -19,57 +20,85 @@ class HomeView extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineLarge,
           ),
           const Spacer(flex: 2),
-          ElevatedButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(50),
-                  ),
-                  side: BorderSide(
-                    color: Colors.black87,
-                    width: 0,
-                  ),
-                ),
-                builder: (context) => Container(
-                  decoration: const BoxDecoration(
+          SizedBox(
+            width: MediaQuery.of(context).size.width * .25,
+            height: 55,
+            child: ElevatedButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(50),
                     ),
+                    side: BorderSide(
+                      color: Colors.black87,
+                      width: 0,
+                    ),
                   ),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ChoiceButton(
-                        text: 'Single Player',
-                        gameMode: GameMode.single,
+                  builder: (context) => Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(50),
                       ),
-                      ChoiceButton(
-                        text: 'Play with a Friend',
-                        gameMode: GameMode.friend,
-                      ),
-                      ChoiceButton(
-                        text: 'Watch a Game',
-                        gameMode: GameMode.watch,
-                      ),
-                    ],
+                    ),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ChoiceButton(
+                          text: 'Single Player',
+                          gameMode: GameMode.single,
+                        ),
+                        ChoiceButton(
+                          text: 'Play with a Friend',
+                          gameMode: GameMode.friend,
+                        ),
+                        ChoiceButton(
+                          text: 'Watch a Game',
+                          gameMode: GameMode.watch,
+                        ),
+                      ],
+                    ),
                   ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 10,
                 ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30,
-                vertical: 10,
+                // shape: const CircleBorder(),
               ),
-              // shape: const CircleBorder(),
+              child: const Icon(
+                Icons.play_arrow_rounded,
+                size: 50,
+              ),
             ),
-            child: const Icon(
-              Icons.play_arrow_rounded,
-              size: 50,
+          ),
+          const SizedBox(height: 50),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * .25,
+            height: 55,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutUsView(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 10,
+                ),
+              ),
+              child: const FittedBox(
+                child: Text('About Us'),
+              ),
             ),
           ),
           const Spacer(flex: 2),
