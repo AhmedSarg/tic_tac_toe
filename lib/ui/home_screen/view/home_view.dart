@@ -21,8 +21,8 @@ class HomeView extends StatelessWidget {
           ),
           const Spacer(flex: 2),
           SizedBox(
-            width: MediaQuery.of(context).size.width * .25,
-            height: 55,
+            width: MediaQuery.of(context).size.width * .3,
+            height: 60,
             child: ElevatedButton(
               onPressed: () {
                 showModalBottomSheet(
@@ -71,16 +71,18 @@ class HomeView extends StatelessWidget {
                 ),
                 // shape: const CircleBorder(),
               ),
-              child: const Icon(
-                Icons.play_arrow_rounded,
-                size: 50,
+              child: const FittedBox(
+                child: Icon(
+                  Icons.play_arrow_rounded,
+                  size: 50,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 50),
           SizedBox(
-            width: MediaQuery.of(context).size.width * .25,
-            height: 55,
+            width: MediaQuery.of(context).size.width * .3,
+            height: 60,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(

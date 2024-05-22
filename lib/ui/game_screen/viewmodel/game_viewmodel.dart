@@ -34,7 +34,7 @@ class GameViewModel extends Cubit<GameStates> {
       int j1 = vecToMat(index).$2;
       xoGamePlay.setTile(i1, j1);
       _items[index] = xoGamePlay.getTile(i1, j1).symbol();
-      xoGamePlay.update();
+
       Future.delayed(
         const Duration(seconds: 1),
         () {
@@ -46,6 +46,7 @@ class GameViewModel extends Cubit<GameStates> {
   }
 
   getComputerAnswer() {
+    xoGamePlay.update();
     for (int ind = 0; ind < _items.length; ind++) {
       int i2 = vecToMat(ind).$1;
       int j2 = vecToMat(ind).$2;

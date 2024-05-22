@@ -21,7 +21,6 @@ class GameView extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Center(
         child: Column(
-          // mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(height: 30),
@@ -31,24 +30,66 @@ class GameView extends StatelessWidget {
                 child: XOGridView(),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 50),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: viewModel.restart,
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+            viewModel.xoGamePlay.getGameStatus() == GameStatus.ongoing
+                ? Container(
+                    margin: const EdgeInsets.only(top: 50),
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: viewModel.restart,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'Restart',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      const Text(''),
+                      Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: viewModel.restart,
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: Text(
+                            'Restart',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: viewModel.restart,
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: Text(
+                            'Restart',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                child: Text(
-                  'Restart',
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ),
-            ),
           ],
         ),
       ),
