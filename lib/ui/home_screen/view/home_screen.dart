@@ -5,6 +5,8 @@ import 'package:tic_tac_toe/ui/home_screen/viewmodel/home_states.dart';
 import 'package:tic_tac_toe/ui/home_screen/viewmodel/home_viewmodel.dart';
 import 'package:tic_tac_toe/ui/resources/app_theme.dart';
 
+import '../../about_us_screen/view/about_us_view.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

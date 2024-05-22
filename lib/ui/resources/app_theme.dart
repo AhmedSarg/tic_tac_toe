@@ -100,6 +100,13 @@ class AppTheme {
       backgroundColor: AppColors.buttonBackgroundColor,
       foregroundColor: AppColors.buttonTextColor,
     ),
+    cardTheme: CardTheme(color: AppColors.buttonBackgroundColor),
+    dividerTheme: DividerThemeData(
+      color: AppColors.darkPrimaryTextColor,
+    ),
+    iconTheme: IconThemeData(
+      color: AppColors.darkPrimaryTextColor,
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -204,6 +211,13 @@ class AppTheme {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.darkButtonBackgroundColor,
       foregroundColor: AppColors.darkButtonTextColor,
+    ),
+    cardTheme: CardTheme(color: AppColors.scoreboardTextColor),
+    dividerTheme: DividerThemeData(
+      color: AppColors.darkPrimaryTextColor,
+    ),
+    iconTheme: IconThemeData(
+      color: AppColors.darkPrimaryTextColor,
     ),
   );
 }
