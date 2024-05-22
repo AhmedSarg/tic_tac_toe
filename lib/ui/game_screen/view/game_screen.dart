@@ -11,7 +11,7 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => GameViewModel(),
+        create: (context) => GameViewModel()..start(),
         child: BlocConsumer<GameViewModel, GameStates>(
           listener: (context, state) {},
           builder: (context, state) {
