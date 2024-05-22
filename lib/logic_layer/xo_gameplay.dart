@@ -7,11 +7,11 @@ import 'logic_grid_analyzer.dart';
 import 'logic_position.dart';
 
 class XOGamePlay {
-  final PersonMode _playerAMode;
-  final PersonMode _playerBMode;
+  final PlayerMode _playerAMode;
+  final PlayerMode _playerBMode;
 
-  final PlayerMode _playerAChoice;
-  final PlayerMode _playerBChoice;
+  final Choice _playerAChoice;
+  final Choice _playerBChoice;
 
   final PlayGrid _grid;
 
@@ -20,34 +20,35 @@ class XOGamePlay {
   bool _haltGame = false;
   GameStatus _status = GameStatus.ongoing;
 
-  Player _currentPlayerRole = Player.playerA;
+  Player _currentPlayerRole;
 
   XOGamePlay(this._playerAMode, this._playerBMode, this._playerAChoice,
-      this._playerBChoice, this._grid, this.onGameEnd);
+      this._playerBChoice, this._grid, this.onGameEnd, this._currentPlayerRole);
 
   factory XOGamePlay.start({
-    required PersonMode playerA,
-    required PersonMode playerB,
-    required PlayerMode playerAChoice,
+    required PlayerMode playerA,
+    required PlayerMode playerB,
+    required Player startPlayer,
+    required Choice playerAChoice,
     required void Function(XOGamePlay gamePlay) onGameEnd,
   }) {
-    assert(playerAChoice != PlayerMode.naN);
+    assert(playerAChoice != Choice.naN);
     return XOGamePlay(playerA, playerB, playerAChoice, playerAChoice.opposite(),
-        PlayGrid.createEmpty(), onGameEnd);
+        PlayGrid.createEmpty(), onGameEnd, startPlayer);
   }
 
   bool setTile(int i, int j) {
     if (_haltGame) return false;
 
     bool isCurrentRoleHuman;
-    PlayerMode currentChoice;
+    Choice currentChoice;
 
     switch (_currentPlayerRole) {
       case Player.playerA:
-        isCurrentRoleHuman = (_playerAMode == PersonMode.human);
+        isCurrentRoleHuman = (_playerAMode == PlayerMode.human);
         currentChoice = _playerAChoice;
       case Player.playerB:
-        isCurrentRoleHuman = (_playerBMode == PersonMode.human);
+        isCurrentRoleHuman = (_playerBMode == PlayerMode.human);
         currentChoice = _playerBChoice;
     }
 
@@ -67,9 +68,9 @@ class XOGamePlay {
 
     switch (_currentPlayerRole) {
       case Player.playerA:
-        isCurrentRoleHuman = (_playerAMode == PersonMode.human);
+        isCurrentRoleHuman = (_playerAMode == PlayerMode.human);
       case Player.playerB:
-        isCurrentRoleHuman = (_playerBMode == PersonMode.human);
+        isCurrentRoleHuman = (_playerBMode == PlayerMode.human);
     }
 
     return isCurrentRoleHuman;
@@ -77,7 +78,7 @@ class XOGamePlay {
 
   bool isGameStopped() => _haltGame;
 
-  PlayerMode getTile(int i, int j) {
+  Choice getTile(int i, int j) {
     assert(checkPosition(i, j));
     return _grid.getTile(i, j);
   }
@@ -89,16 +90,16 @@ class XOGamePlay {
     if (_status == GameStatus.ongoing) {
       //make the machine play
       bool isMachineRole;
-      PersonMode currentMode;
-      PlayerMode currentChoice;
+      PlayerMode currentMode;
+      Choice currentChoice;
 
       switch (_currentPlayerRole) {
         case Player.playerA:
-          isMachineRole = (_playerAMode != PersonMode.human);
+          isMachineRole = (_playerAMode != PlayerMode.human);
           currentMode = _playerAMode;
           currentChoice = _playerAChoice;
         case Player.playerB:
-          isMachineRole = (_playerBMode != PersonMode.human);
+          isMachineRole = (_playerBMode != PlayerMode.human);
           currentMode = _playerBMode;
           currentChoice = _playerBChoice;
       }
@@ -127,7 +128,7 @@ class XOGamePlay {
 
   GameStatus getGameStatus() => _status;
 
-  PlayerMode getCurrentChoice() {
+  Choice getCurrentChoice() {
     switch (_currentPlayerRole) {
       case Player.playerA:
         return _playerAChoice;
