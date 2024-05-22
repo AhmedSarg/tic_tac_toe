@@ -15,6 +15,8 @@ class XOGamePlay {
 
   final PlayGrid _grid;
 
+  final List<GridPos> _winnerTiles;
+
   final void Function(XOGamePlay gamePlay) onGameEnd;
 
   bool _haltGame = false;
@@ -23,7 +25,7 @@ class XOGamePlay {
   Player _currentPlayerRole = Player.playerA;
 
   XOGamePlay(this._playerAMode, this._playerBMode, this._playerAChoice,
-      this._playerBChoice, this._grid, this.onGameEnd);
+      this._playerBChoice, this._grid, this.onGameEnd, this._winnerTiles);
 
   factory XOGamePlay.start({
     required PersonMode playerA,
@@ -32,8 +34,15 @@ class XOGamePlay {
     required void Function(XOGamePlay gamePlay) onGameEnd,
   }) {
     assert(playerAChoice != PlayerMode.naN);
-    return XOGamePlay(playerA, playerB, playerAChoice, playerAChoice.opposite(),
-        PlayGrid.createEmpty(), onGameEnd);
+    return XOGamePlay(
+      playerA,
+      playerB,
+      playerAChoice,
+      playerAChoice.opposite(),
+      PlayGrid.createEmpty(),
+      onGameEnd,
+      List.empty(growable: true),
+    );
   }
 
   bool setTile(int i, int j) {
@@ -84,7 +93,7 @@ class XOGamePlay {
 
   void update() {
     //check if game stopped
-    _status = LogicGridAnalyzer.analyze(_grid);
+    _status = LogicGridAnalyzer.analyze(_grid, _winnerTiles);
 
     if (_status == GameStatus.ongoing) {
       //make the machine play
@@ -112,7 +121,7 @@ class XOGamePlay {
         _currentPlayerRole = _currentPlayerRole.opposite();
 
         //check again after ai play
-        _status = LogicGridAnalyzer.analyze(_grid);
+        _status = LogicGridAnalyzer.analyze(_grid, _winnerTiles);
         if (_status != GameStatus.ongoing) {
           _haltGame = true;
           onGameEnd.call(this);
@@ -135,4 +144,6 @@ class XOGamePlay {
         return _playerBChoice;
     }
   }
+
+  List<GridPos> getWinnerTiles() => List.from(_winnerTiles);
 }

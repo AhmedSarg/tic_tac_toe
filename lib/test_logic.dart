@@ -6,9 +6,10 @@ import 'logic_layer/logic_constants.dart';
 import 'logic_layer/logic_enums.dart';
 import 'logic_layer/xo_gameplay.dart';
 
-void testGamePlay() {
+void main() {
   XOGamePlay gamePlay = XOGamePlay.start(
-    playerA: PersonMode.human,
+    playerA: PersonMode.machineHard
+    ,
     playerB: PersonMode.machineHard,
     playerAChoice: PlayerMode.o,
     onGameEnd: (gamePlay) {
