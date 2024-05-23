@@ -17,6 +17,14 @@ class DataIntent {
 
   //--------------------------------------------------------------------------
 
+  static Player? _playerStart;
+
+  static set setPlayerStart(Player player) => _playerStart = player;
+
+  static Player get getPlayerStart => _playerStart ?? Player.playerA;
+
+  //--------------------------------------------------------------------------
+
   static DifficultyLevel? _difficultyLevel;
 
   static set setDifficultyLevel(DifficultyLevel difficultyLevel) {
