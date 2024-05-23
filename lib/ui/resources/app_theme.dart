@@ -221,5 +221,5 @@ class AppTheme {
       iconTheme: const IconThemeData(
         color: AppColors.darkPrimaryTextColor,
       ),
-      dialogTheme: DialogTheme(backgroundColor: AppColors.scoreboardTextColor));
+      dialogTheme: const DialogTheme(backgroundColor: AppColors.scoreboardTextColor));
 }

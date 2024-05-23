@@ -26,7 +26,8 @@ List<TeamMember> teamList = [
     bio: "Embedded System Student at Amit Learning (Group El-Maadi 534)\n"
         "Embedded System member at IEEE BUB SB\n"
         "\nPhone: 01030296141\n"
-        "Email: yosefsamy019@gmail.com",
+        "Email: yosefsamy019@gmail.com\n"
+        "Email: a24e4r226u@gmail.com",
     img: AssetsManager.profileYosef,
     bioMp3: yosefProfileMp3,
   ),
@@ -86,7 +87,7 @@ class AboutUsView extends StatelessWidget {
                           radius: 30,
                           backgroundImage: AssetImage(member.img),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         Expanded(
@@ -107,7 +108,7 @@ class AboutUsView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(

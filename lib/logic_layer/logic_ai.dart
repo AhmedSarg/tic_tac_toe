@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'logic_constants.dart';
 import 'logic_enums.dart';
 import 'logic_extensions.dart';
@@ -18,23 +20,27 @@ class TicTacTocAI {
     int modeLvl = mode.getLevelNum();
     GridPos? result;
 
-    //winner method link:- https://www.facebook.com/watch/?mibextid=w8EBqM&v=335121298155996&rdid=suAuBrZEz6cPtTql
-    //random n    intermediate n       hard y
-    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
-      result ??= _tryWinnerMethod(grid.clone(), self, List.of(available));
-    }
-
     //check if self win
     //random n    intermediate y       hard y
     if (modeLvl >= PersonMode.machineIntermediate.getLevelNum()) {
       result ??= _checkIfSelfWin(grid.clone(), self, List.of(available));
     }
 
-    //check if another lose
+    //check if another win
     //random n    intermediate y       hard y
     if (modeLvl >= PersonMode.machineIntermediate.getLevelNum()) {
       result ??=
           _checkIfSelfWin(grid.clone(), self.opposite(), List.of(available));
+    }
+
+    //winner method link:- https://www.facebook.com/watch/?mibextid=w8EBqM&v=335121298155996&rdid=suAuBrZEz6cPtTql
+    //random n    intermediate n       hard y
+    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
+      result ??= _tryWinnerMethod(grid.clone(), self, List.of(available));
+    }
+
+    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
+      result ??= _tryIgnoreWinnerMethod(grid.clone(), self, List.of(available));
     }
 
     //try not to let opponent to make two ways to win
@@ -48,6 +54,13 @@ class TicTacTocAI {
     //random n    intermediate n       hard y
     if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
       result ??= _get2WaysToSelfWin(grid.clone(), self, List.of(available));
+    }
+
+    //get most probable win method
+    //random n    intermediate n       hard y
+    if (modeLvl >= PersonMode.machineHard.getLevelNum()) {
+      result ??= _mostProbableWinComplexityNpow3(
+          grid.clone(), self, List.of(available));
     }
 
     //random movement
@@ -150,19 +163,93 @@ class TicTacTocAI {
     } else if (available.length == 7 && (grid.getTile(1, 1) == self)) {
       //the plan is ok
       if (grid.getTile(0, 0) == self.opposite()) return GridPos(2, 1);
-      if (grid.getTile(0, 1) == self.opposite())
+      if (grid.getTile(0, 1) == self.opposite()) {
         return getRandom([GridPos(2, 0), GridPos(2, 2)]);
+      }
       if (grid.getTile(0, 2) == self.opposite()) return GridPos(1, 0);
 
-      if (grid.getTile(1, 0) == self.opposite())
+      if (grid.getTile(1, 0) == self.opposite()) {
         return getRandom([GridPos(0, 2), GridPos(2, 2)]);
-      if (grid.getTile(1, 2) == self.opposite())
+      }
+      if (grid.getTile(1, 2) == self.opposite()) {
         return getRandom([GridPos(0, 0), GridPos(2, 0)]);
+      }
 
       if (grid.getTile(2, 0) == self.opposite()) return GridPos(1, 2);
-      if (grid.getTile(2, 1) == self.opposite())
+      if (grid.getTile(2, 1) == self.opposite()) {
         return getRandom([GridPos(0, 0), GridPos(0, 2)]);
+      }
       if (grid.getTile(2, 2) == self.opposite()) return GridPos(0, 1);
+    } else {
+      return null;
+    }
+    return null;
+  }
+
+  static GridPos? _tryIgnoreWinnerMethod(
+      PlayGrid grid, PlayerMode self, List<GridPos> available) {
+    if (available.length == 8) {
+      if (grid.getTile(1, 1) == self.opposite()) {
+        return getRandom([
+          GridPos(0, 0),
+          GridPos(0, 2),
+          GridPos(2, 0),
+          GridPos(2, 2),
+        ]);
+      }
+    }
+    return null;
+  }
+
+  static GridPos? _mostProbableWinComplexityNpow3(
+      PlayGrid grid, PlayerMode self, List<GridPos> available) {
+    if (available.length < 3) {
+      return null;
+    }
+
+    GridPos? returnPos;
+    double returnProb = 0;
+
+    for (int p1 = 0; p1 < available.length; p1++) {
+      int winNum = 0;
+      int totalNum = 0;
+
+      for (int p2 = p1 + 1; p2 < available.length; p2++) {
+        for (int p3 = p2 + 1; p3 < available.length; p3++) {
+          grid.clone();
+
+          grid.forceTile(available[p1].i, available[p1].j, self);
+          grid.forceTile(available[p2].i, available[p2].j, self.opposite());
+          grid.forceTile(available[p3].i, available[p3].j, self);
+
+          GameStatus res =
+              LogicGridAnalyzer.analyze(grid, List.empty(growable: true));
+
+          switch (res) {
+            case GameStatus.winX:
+              (self == PlayerMode.x) ? winNum++ : null;
+            case GameStatus.winO:
+              (self == PlayerMode.o) ? winNum++ : null;
+            case GameStatus.draw:
+            case GameStatus.ongoing:
+          }
+          totalNum++;
+        }
+      }
+
+      if (returnPos == null) {
+        returnPos = available[p1];
+        returnProb = winNum / totalNum;
+      } else if (returnProb < (winNum / totalNum)) {
+        returnPos = available[p1];
+      }
+    }
+
+    if (returnProb > 0) {
+      if (kDebugMode) {
+        print("Most Probable N3: $returnPos , $returnProb");
+      }
+      return returnPos;
     } else {
       return null;
     }

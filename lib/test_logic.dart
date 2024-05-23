@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:tic_tac_toe/logic_layer/logic_extensions.dart';
 
 import 'logic_layer/logic_constants.dart';
@@ -12,24 +13,54 @@ void test1() {
     playerB: PersonMode.human,
     playerAChoice: PlayerMode.o,
     onGameEnd: (gamePlay) {
-      print("\n" * 2);
-      print("-" * 30);
-      print("\t\tGame Ended");
-      print("Status: \t\t${gamePlay.getGameStatus()}");
-      print("Game Stopped: \t${gamePlay.isGameStopped()}");
-      print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
-      print("Current Role: \t${gamePlay.getCurrentChoice()}");
-      print("Winner Tiles: \t${gamePlay.getWinnerTiles()}");
-      print("-" * 30);
+      if (kDebugMode) {
+        print("\n" * 2);
+      }
+      if (kDebugMode) {
+        if (kDebugMode) {
+          print("-" * 30);
+        }
+      }
+      if (kDebugMode) {
+        print("\t\tGame Ended");
+      }
+      if (kDebugMode) {
+        print("Status: \t\t${gamePlay.getGameStatus()}");
+      }
+      if (kDebugMode) {
+        print("Game Stopped: \t${gamePlay.isGameStopped()}");
+      }
+      if (kDebugMode) {
+        print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
+      }
+      if (kDebugMode) {
+        print("Current Role: \t${gamePlay.getCurrentChoice()}");
+      }
+      if (kDebugMode) {
+        print("Winner Tiles: \t${gamePlay.getWinnerTiles()}");
+      }
+      if (kDebugMode) {
+        print("-" * 30);
+      }
     },
   );
 
   while (gamePlay.isGameStopped() == false) {
-    print("\n\n\n");
-    print("Status: \t\t${gamePlay.getGameStatus()}");
-    print("Game Stopped: \t${gamePlay.isGameStopped()}");
-    print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
-    print("Current Role: \t${gamePlay.getCurrentChoice()}");
+    if (kDebugMode) {
+      print("\n\n\n");
+    }
+    if (kDebugMode) {
+      print("Status: \t\t${gamePlay.getGameStatus()}");
+    }
+    if (kDebugMode) {
+      print("Game Stopped: \t${gamePlay.isGameStopped()}");
+    }
+    if (kDebugMode) {
+      print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
+    }
+    if (kDebugMode) {
+      print("Current Role: \t${gamePlay.getCurrentChoice()}");
+    }
 
     //print grid
     for (int i = 0; i < gridHeight; i++) {
@@ -65,15 +96,33 @@ void main() {
     playerB: PersonMode.machineHard,
     playerAChoice: PlayerMode.o,
     onGameEnd: (gamePlay) {
-      print("\n" * 2);
-      print("-" * 30);
-      print("\t\tGame Ended");
-      print("Status: \t\t${gamePlay.getGameStatus()}");
-      print("Game Stopped: \t${gamePlay.isGameStopped()}");
-      print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
-      print("Current Role: \t${gamePlay.getCurrentChoice()}");
-      print("Winner Tiles: \t${gamePlay.getWinnerTiles()}");
-      print("-" * 30);
+      if (kDebugMode) {
+        print("\n" * 2);
+      }
+      if (kDebugMode) {
+        print("-" * 30);
+      }
+      if (kDebugMode) {
+        print("\t\tGame Ended");
+      }
+      if (kDebugMode) {
+        print("Status: \t\t${gamePlay.getGameStatus()}");
+      }
+      if (kDebugMode) {
+        print("Game Stopped: \t${gamePlay.isGameStopped()}");
+      }
+      if (kDebugMode) {
+        print("Waiting Human: \t${gamePlay.isWaitingHumanInput()}");
+      }
+      if (kDebugMode) {
+        print("Current Role: \t${gamePlay.getCurrentChoice()}");
+      }
+      if (kDebugMode) {
+        print("Winner Tiles: \t${gamePlay.getWinnerTiles()}");
+      }
+      if (kDebugMode) {
+        print("-" * 30);
+      }
     },
   );
 

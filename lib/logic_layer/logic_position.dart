@@ -9,6 +9,7 @@ class GridPos {
   }
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(Object other) {
     if (other is GridPos ) return i == other.i && j == other.j;
     return false;
