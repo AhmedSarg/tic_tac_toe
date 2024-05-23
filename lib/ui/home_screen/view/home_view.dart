@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/ui/about_us_screen/view/about_us_view.dart';
 import 'package:tic_tac_toe/ui/difficulty_screen/view/difficulty_screen.dart';
+import 'package:tic_tac_toe/ui/names_screen/view/names_screen.dart';
 
 import '../../../logic_layer/data_intent.dart';
 import '../../../logic_layer/logic_enums.dart';
@@ -127,10 +128,12 @@ class ChoiceButton extends StatelessWidget {
         Navigator.pop(context);
         DataIntent.setGameMode = gameMode;
         Widget next;
-        if (gameMode != GameMode.single) {
-          next = const GameScreen();
-        } else {
+        if (gameMode == GameMode.single) {
           next = const DifficultyScreen();
+        } else if (gameMode == GameMode.friend) {
+          next = const NamesScreen();
+        } else {
+          next = const GameScreen();
         }
         Navigator.push(
           context,

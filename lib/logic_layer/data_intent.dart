@@ -33,4 +33,24 @@ class DataIntent {
 
   static DifficultyLevel get getDifficultyLevel =>
       _difficultyLevel ?? DifficultyLevel.hard;
+
+  //--------------------------------------------------------------------------
+
+  static String? _playerAName;
+
+  static set setPlayerAName(String playerAName) {
+    _playerAName = playerAName;
+  }
+
+  static String? get getPlayerAName => _playerAName;
+
+  //--------------------------------------------------------------------------
+
+  static String? _playerBName;
+
+  static set setPlayerBName(String playerBName) {
+    _playerBName = playerBName;
+  }
+
+  static String? get getPlayerBName => _playerBName;
 }

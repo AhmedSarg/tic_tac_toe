@@ -71,6 +71,12 @@ class AppTheme {
         fontSize: 12,
         fontWeight: FontWeight.w200,
       ),
+      titleLarge: TextStyle(
+        color: AppColors.buttonBackgroundColor,
+        fontFamily: GoogleFonts.zcoolKuaiLe().fontFamily,
+        fontSize: 50,
+        fontWeight: FontWeight.w600,
+      ),
     ),
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.buttonBackgroundColor,
@@ -95,6 +101,29 @@ class AppTheme {
       onSecondary: AppColors.buttonTextColor,
       onSurface: AppColors.primaryTextColor,
       onError: AppColors.buttonTextColor,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
+      hintStyle: TextStyle(
+        fontFamily: GoogleFonts.gabarito().fontFamily,
+        fontSize: 14,
+        color: AppColors.primaryTextColor,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: AppColors.gridLineColor,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: AppColors.buttonBackgroundColor,
+        ),
+      ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.buttonBackgroundColor,
@@ -185,6 +214,12 @@ class AppTheme {
           fontSize: 12,
           fontWeight: FontWeight.w200,
         ),
+        titleLarge: TextStyle(
+          color: AppColors.darkButtonBackgroundColor,
+          fontFamily: GoogleFonts.zcoolKuaiLe().fontFamily,
+          fontSize: 50,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       buttonTheme: const ButtonThemeData(
         buttonColor: AppColors.darkButtonBackgroundColor,
@@ -210,6 +245,29 @@ class AppTheme {
         onSurface: AppColors.darkPrimaryTextColor,
         onError: AppColors.darkButtonTextColor,
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 5,
+        ),
+        hintStyle: TextStyle(
+          fontFamily: GoogleFonts.gabarito().fontFamily,
+          fontSize: 14,
+          color: AppColors.darkPrimaryTextColor,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: AppColors.darkGridLineColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: AppColors.darkButtonBackgroundColor,
+          ),
+        ),
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.darkButtonBackgroundColor,
         foregroundColor: AppColors.darkButtonTextColor,
@@ -221,5 +279,6 @@ class AppTheme {
       iconTheme: const IconThemeData(
         color: AppColors.darkPrimaryTextColor,
       ),
-      dialogTheme: const DialogTheme(backgroundColor: AppColors.scoreboardTextColor));
+      dialogTheme:
+          const DialogTheme(backgroundColor: AppColors.scoreboardTextColor));
 }

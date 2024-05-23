@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tic_tac_toe/logic_layer/data_intent.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_viewmodel.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
@@ -99,7 +100,9 @@ class ScoreBoardItem extends StatelessWidget {
         if (viewModel.playerPersonMode == PersonMode.human &&
             viewModel.opponentPersonMode == PersonMode.human) {
           // Human vs Human
-          tileText = 'Human';
+          tileText = index == 1
+              ? DataIntent.getPlayerAName ?? 'Human'
+              : DataIntent.getPlayerBName ?? 'Human';
         } else if (viewModel.playerPersonMode != PersonMode.human) {
           //Bot vs Bot
           tileText = 'Bot ${1 - index + 1}';

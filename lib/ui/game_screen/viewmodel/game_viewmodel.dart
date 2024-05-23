@@ -74,7 +74,9 @@ class GameViewModel extends Cubit<GameStates> {
   }
 
   play(int index) {
-    if (_items[index] == '') {
+    if (_items[index] == '' &&
+        !xoGamePlay.isGameStopped() &&
+        _gameMode != GameMode.watch) {
       AudioManager.instance.playMovementSound();
       int i1 = vecToMat(index).$1;
       int j1 = vecToMat(index).$2;
@@ -105,6 +107,14 @@ class GameViewModel extends Cubit<GameStates> {
       _items[ind] = xoGamePlay.getTile(i2, j2).symbol();
     }
     emit(PlayedState());
+    if (!xoGamePlay.isGameStopped() && _gameMode == GameMode.watch) {
+      Future.delayed(
+        const Duration(seconds: 1),
+        () {
+          getComputerAnswer();
+        },
+      );
+    }
   }
 
   restart() {
@@ -143,6 +153,7 @@ class GameViewModel extends Cubit<GameStates> {
     } else {
       _playerPersonMode = PersonMode.machineHard;
       _opponentPersonMode = PersonMode.machineHard;
+      _playerMode = PlayerMode.x;
     }
   }
 
@@ -209,6 +220,11 @@ class GameViewModel extends Cubit<GameStates> {
         }
       },
     );
-    getComputerAnswer();
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        getComputerAnswer();
+      },
+    );
   }
 }
