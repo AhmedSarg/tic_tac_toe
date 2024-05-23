@@ -152,8 +152,6 @@ class XOGridView extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
-          // margin: EdgeInsets.all(1),
-          // padding: EdgeInsets.all(spacing),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,

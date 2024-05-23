@@ -21,8 +21,8 @@ class DataIntent {
 
   static set setDifficultyLevel(DifficultyLevel difficultyLevel) {
     _difficultyLevel = difficultyLevel;
-    print('difficulty level set to $_difficultyLevel');
   }
 
-  static DifficultyLevel get getDifficultyLevel => _difficultyLevel!;
+  static DifficultyLevel get getDifficultyLevel =>
+      _difficultyLevel ?? DifficultyLevel.hard;
 }
