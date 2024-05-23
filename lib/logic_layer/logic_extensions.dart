@@ -9,6 +9,15 @@ extension PlayerExt on Player {
         return Player.playerA;
     }
   }
+
+  String toStrAsSingleMode() {
+    switch (this) {
+      case Player.playerA:
+        return "You";
+      case Player.playerB:
+        return "AI";
+    }
+  }
 }
 
 extension PlayerModeExt on PersonMode {

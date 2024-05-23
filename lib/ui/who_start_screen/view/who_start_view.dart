@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tic_tac_toe/logic_layer/logic_extensions.dart';
 import 'package:tic_tac_toe/ui/game_screen/view/game_screen.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
 
@@ -124,7 +125,7 @@ class WhoStart extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(30),
                         child: Text(
-                          player.name.toUpperCase(),
+                          player.toStrAsSingleMode().toUpperCase(),
                           style: Theme.of(context)
                               .textTheme
                               .displayLarge
