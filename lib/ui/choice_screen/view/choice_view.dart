@@ -4,6 +4,7 @@ import 'package:tic_tac_toe/ui/choice_screen/viewmodel/choice_states.dart';
 import 'package:tic_tac_toe/ui/choice_screen/viewmodel/choice_viewmodel.dart';
 import 'package:tic_tac_toe/ui/game_screen/view/game_screen.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
+import 'package:tic_tac_toe/ui/who_start_screen/view/who_start_screen.dart';
 
 import '../../../logic_layer/logic_enums.dart';
 
@@ -26,12 +27,11 @@ class ChoiceView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: viewModel.choice != null
                       ? () {
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const GameScreen(),
+                              builder: (context) => const WhoStartScreen(),
                             ),
-                            (r) => r.isFirst,
                           );
                         }
                       : null,
@@ -42,7 +42,7 @@ class ChoiceView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 70),
                   ),
                   child: Text(
-                    'Start the Game',
+                    'Next',
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),

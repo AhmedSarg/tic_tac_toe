@@ -89,7 +89,7 @@ class WhoStart extends StatelessWidget {
         Color color = player == Player.playerA
             ? AppColors.playerXColor
             : AppColors.playerOColor;
-        bool chosen = viewModel.startPlayer == Player.playerA;
+        bool chosen = viewModel.startPlayer == player;
         bool initial = viewModel.startPlayer == null;
         double width = MediaQuery.of(context).size.width * 5 / 13;
         if (chosen && !initial) {

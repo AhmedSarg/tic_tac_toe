@@ -28,6 +28,7 @@ class GameViewModel extends Cubit<GameStates> {
   late PersonMode _playerPersonMode;
 
   late PersonMode _opponentPersonMode;
+  late Player _startPlayer;
 
   late GameMode _gameMode;
 
@@ -116,6 +117,7 @@ class GameViewModel extends Cubit<GameStates> {
 
   fetchGameOptions() {
     _playerMode = DataIntent.getPlayerMode;
+    _startPlayer = DataIntent.getPlayerStart;
     _gameMode = DataIntent.getGameMode;
     _difficultyLevel = DataIntent.getDifficultyLevel;
     if (_gameMode == GameMode.single) {
@@ -142,6 +144,7 @@ class GameViewModel extends Cubit<GameStates> {
       playerA: _playerPersonMode,
       playerB: _opponentPersonMode,
       playerAChoice: _playerMode,
+      startPlayer: _startPlayer,
       onGameEnd: (gameplay) {
         _winningTiles.clear();
         for (GridPos tile in gameplay.getWinnerTiles()) {
@@ -193,5 +196,6 @@ class GameViewModel extends Cubit<GameStates> {
         }
       },
     );
+    getComputerAnswer();
   }
 }
