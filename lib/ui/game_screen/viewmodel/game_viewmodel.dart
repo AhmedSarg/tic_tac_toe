@@ -22,9 +22,21 @@ class GameViewModel extends Cubit<GameStates> {
 
   late XOGamePlay xoGamePlay;
 
-  PlayerMode _playerMode = DataIntent.getPlayerMode;
+  late PlayerMode _playerMode;
 
-  String _result = 'Initial';
+  late PersonMode _playerPersonMode;
+
+  late PersonMode _opponentPersonMode;
+
+  late GameMode _gameMode;
+
+  late DifficultyLevel _difficultyLevel;
+
+  late String _result = 'Initial';
+
+  int _playerAScore = 0;
+  int _playerBScore = 0;
+
   Color _resultColor = AppColors.gridLineColor;
 
   List<String> get items => _items;
@@ -36,6 +48,14 @@ class GameViewModel extends Cubit<GameStates> {
   Color get resultColor => _resultColor;
 
   List<int> get winningTiles => _winningTiles;
+
+  int get playerAScore => _playerAScore;
+
+  int get playerBScore => _playerBScore;
+
+  PersonMode get playerPersonMode => _playerPersonMode;
+
+  PersonMode get opponentPersonMode => _opponentPersonMode;
 
   set setResult(String result) {
     _result = result;
@@ -77,35 +97,49 @@ class GameViewModel extends Cubit<GameStates> {
     emit(PlayedState());
   }
 
-  togglePlayerMode() {
-    if (_playerMode == PlayerMode.x) {
-      _playerMode = PlayerMode.o;
-    } else {
-      _playerMode = PlayerMode.x;
-    }
-  }
-
   restart() {
     _items.fillRange(0, _items.length, '');
-    _playerMode = DataIntent.getPlayerMode;
+    _playerAScore = 0;
+    _playerBScore = 0;
     start();
     emit(InitialState());
   }
 
-  start() {
-    PersonMode opponentMode;
-    if (DataIntent.getGameMode != GameMode.single) {
-      opponentMode = PersonMode.human;
-    } else if (DataIntent.getDifficultyLevel == DifficultyLevel.easy) {
-      opponentMode = PersonMode.machineRandom;
-    } else if (DataIntent.getDifficultyLevel == DifficultyLevel.medium) {
-      opponentMode = PersonMode.machineIntermediate;
+  playAgain() {
+    int a = _playerAScore;
+    int b = _playerBScore;
+    restart();
+    _playerAScore = a;
+    _playerBScore = b;
+  }
+
+  fetchGameOptions() {
+    _playerMode = DataIntent.getPlayerMode;
+    _gameMode = DataIntent.getGameMode;
+    _difficultyLevel = DataIntent.getDifficultyLevel;
+    if (_gameMode == GameMode.single) {
+      _playerPersonMode = PersonMode.human;
+      if (_difficultyLevel == DifficultyLevel.easy) {
+        _opponentPersonMode = PersonMode.machineRandom;
+      } else if (_difficultyLevel == DifficultyLevel.medium) {
+        _opponentPersonMode = PersonMode.machineIntermediate;
+      } else {
+        _opponentPersonMode = PersonMode.machineHard;
+      }
+    } else if (_gameMode == GameMode.friend) {
+      _playerPersonMode = PersonMode.human;
+      _opponentPersonMode = PersonMode.human;
     } else {
-      opponentMode = PersonMode.machineHard;
+      _playerPersonMode = PersonMode.machineHard;
+      _opponentPersonMode = PersonMode.machineHard;
     }
+  }
+
+  start() {
+    fetchGameOptions();
     xoGamePlay = XOGamePlay.start(
-      playerA: PersonMode.human,
-      playerB: opponentMode,
+      playerA: _playerPersonMode,
+      playerB: _opponentPersonMode,
       playerAChoice: _playerMode,
       onGameEnd: (gameplay) {
         _winningTiles.clear();
@@ -115,6 +149,7 @@ class GameViewModel extends Cubit<GameStates> {
         if (gameplay.getGameStatus() != GameStatus.draw) {
           if (gameplay.getGameStatus().name[3] ==
               _playerMode.symbol().toUpperCase()) {
+            _playerAScore++;
             if (DataIntent.getGameMode == GameMode.single) {
               _result = 'You Won';
               _resultColor = _playerMode == PlayerMode.x
@@ -129,6 +164,7 @@ class GameViewModel extends Cubit<GameStates> {
               emit(PlayerAWins());
             }
           } else {
+            _playerBScore++;
             if (DataIntent.getGameMode == GameMode.single) {
               _result = 'You Lost';
               _resultColor = _playerMode == PlayerMode.x
@@ -148,6 +184,8 @@ class GameViewModel extends Cubit<GameStates> {
           _resultColor = AppColors.gridLineColor;
           emit(DrawState());
         }
+        print('a score: $_playerAScore');
+        print('b score: $_playerBScore');
       },
     );
   }
