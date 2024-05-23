@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
@@ -42,6 +43,14 @@ class ScoreBoard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ScoreBoardItem(index: 0),
+          SizedBox(
+            width: 20,
+            child: Center(
+              child: FittedBox(
+                child: Text('VS'),
+              ),
+            ),
+          ),
           ScoreBoardItem(index: 1),
         ],
       ),
@@ -54,7 +63,7 @@ class ScoreBoardItem extends StatelessWidget {
 
   final int index;
 
-  final double height = 80.0;
+  final double height = 60.0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +71,19 @@ class ScoreBoardItem extends StatelessWidget {
       builder: (context, state) {
         GameViewModel viewModel = GameViewModel.get(context);
         Color tileColor;
+        PlayerMode tilePlayerMode;
         if (index == 1 && viewModel.playerMode == PlayerMode.x) {
           tileColor = AppColors.playerXColor;
+          tilePlayerMode = PlayerMode.x;
         } else if (index == 1 && viewModel.playerMode == PlayerMode.o) {
           tileColor = AppColors.playerOColor;
+          tilePlayerMode = PlayerMode.o;
         } else if (index == 0 && viewModel.playerMode == PlayerMode.x) {
           tileColor = AppColors.playerOColor;
+          tilePlayerMode = PlayerMode.o;
         } else {
           tileColor = AppColors.playerXColor;
+          tilePlayerMode = PlayerMode.x;
         }
         String asset;
         if (index == 1 && viewModel.playerPersonMode == PersonMode.human) {
@@ -81,55 +95,128 @@ class ScoreBoardItem extends StatelessWidget {
         } else {
           asset = AssetsManager.botIcon;
         }
-        return Container(
-          width: (MediaQuery.of(context).size.width - 60) / 2,
-          height: height,
-          decoration: BoxDecoration(
-            color: AppColors.transparent,
-            borderRadius: BorderRadius.horizontal(
-              right: index == 1
-                  ? Radius.circular(height / 2)
-                  : Radius.circular(height / 4),
-              left: index == 0
-                  ? Radius.circular(height / 2)
-                  : Radius.circular(height / 4),
-            ),
-            border: Border.all(
-              color: tileColor,
-              width: 3,
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-          ),
-          child: Directionality(
-            textDirection: index == 0 ? TextDirection.ltr : TextDirection.rtl,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                  radius: height / 2,
-                  backgroundColor: tileColor,
-                  child: Padding(
-                    padding: EdgeInsets.all(height / 6),
-                    child: SvgPicture.asset(
-                      asset,
-                      height: height,
-                    ),
+        String tileText;
+        if (viewModel.playerPersonMode == PersonMode.human &&
+            viewModel.opponentPersonMode == PersonMode.human) {
+          // Human vs Human
+          tileText = 'Human';
+        } else if (viewModel.playerPersonMode != PersonMode.human) {
+          //Bot vs Bot
+          tileText = 'Bot ${1 - index + 1}';
+        } else {
+          //Human vs Bot
+          if (index == 0) {
+            //left tile (bot tile)
+            tileText = 'Bot';
+          } else {
+            //right tile (your tile)
+            tileText = 'You';
+          }
+        }
+        return Directionality(
+          textDirection: index == 0 ? TextDirection.ltr : TextDirection.rtl,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                left: viewModel.xoGamePlay.getCurrentChoice() == tilePlayerMode
+                    ? 0
+                    : -100,
+                right: viewModel.xoGamePlay.getCurrentChoice() == tilePlayerMode
+                    ? 0
+                    : -100,
+                child: SizedBox(
+                  width: (MediaQuery.of(context).size.width - 80) / 2,
+                  child: const Text(
+                    'Your Turn',
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
-                const Spacer(),
-                FittedBox(
-                  child: Text(
-                    index == 0
-                        ? viewModel.playerBScore.toString()
-                        : viewModel.playerAScore.toString(),
-                    style: TextStyle(
-                      fontSize: height,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: height / 4),
+                    child: Text(
+                      tileText,
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
-                ),
-                const Spacer(),
-              ],
-            ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: (MediaQuery.of(context).size.width - 80) / 2,
+                    height: height,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.horizontal(
+                        right: index == 1
+                            ? Radius.circular(height / 2)
+                            : Radius.circular(height / 4),
+                        left: index == 0
+                            ? Radius.circular(height / 2)
+                            : Radius.circular(height / 4),
+                      ),
+                      border: Border.all(
+                        color: tileColor,
+                        width: 3,
+                        strokeAlign: BorderSide.strokeAlignOutside,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleAvatar(
+                          radius: height / 2,
+                          backgroundColor: tileColor,
+                          child: Padding(
+                            padding: EdgeInsets.all(height / 6),
+                            child: SvgPicture.asset(
+                              asset,
+                              height: height,
+                            ),
+                          ),
+                        ).animate(
+                          onPlay: (anim) {
+                            anim.repeat();
+                          },
+                          effects: viewModel.xoGamePlay.getCurrentChoice() ==
+                                  tilePlayerMode
+                              ? [
+                                  const ShimmerEffect(
+                                    delay: Duration(milliseconds: 300),
+                                    duration: Duration(seconds: 1),
+                                    size: 1,
+                                    padding: 0,
+                                  ),
+                                ]
+                              : [
+                                  CustomEffect(
+                                    builder: (context, value, child) {
+                                      return child;
+                                    },
+                                  ),
+                                ],
+                        ),
+                        const Spacer(),
+                        FittedBox(
+                          child: Text(
+                            index == 0
+                                ? viewModel.playerBScore.toString()
+                                : viewModel.playerAScore.toString(),
+                            style: TextStyle(
+                              fontSize: height,
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       },

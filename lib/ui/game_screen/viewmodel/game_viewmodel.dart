@@ -9,6 +9,7 @@ import 'package:tic_tac_toe/logic_layer/logic_position.dart';
 import 'package:tic_tac_toe/logic_layer/xo_gameplay.dart';
 import 'package:tic_tac_toe/ui/game_screen/viewmodel/game_states.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
+import 'package:tic_tac_toe/ui/resources/audio_manager.dart';
 
 import '../../../logic_layer/logic_enums.dart';
 
@@ -74,22 +75,29 @@ class GameViewModel extends Cubit<GameStates> {
 
   play(int index) {
     if (_items[index] == '') {
+      AudioManager.instance.playMovementSound();
       int i1 = vecToMat(index).$1;
       int j1 = vecToMat(index).$2;
       xoGamePlay.setTile(i1, j1);
       _items[index] = xoGamePlay.getTile(i1, j1).symbol();
-
-      Future.delayed(
-        const Duration(seconds: 1),
-        () {
-          getComputerAnswer();
-        },
-      );
+      if (_opponentPersonMode != PersonMode.human &&
+          !xoGamePlay.isWaitingHumanInput()) {
+        Future.delayed(
+          const Duration(seconds: 1),
+          () {
+            getComputerAnswer();
+          },
+        );
+      } else {
+        AudioManager.instance.playMovementSound();
+        xoGamePlay.update();
+      }
       emit(PlayedState());
     }
   }
 
   getComputerAnswer() {
+    AudioManager.instance.playMovementSound();
     xoGamePlay.update();
     for (int ind = 0; ind < _items.length; ind++) {
       int i2 = vecToMat(ind).$1;
@@ -159,12 +167,14 @@ class GameViewModel extends Cubit<GameStates> {
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerXColor
                   : AppColors.playerOColor;
+              // AudioManager.instance.playWinSound();
               emit(WinState());
             } else {
               _result = 'Player A Wins';
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerXColor
                   : AppColors.playerOColor;
+              // AudioManager.instance.playWinSound();
               emit(PlayerAWins());
             }
           } else {
@@ -174,18 +184,21 @@ class GameViewModel extends Cubit<GameStates> {
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerOColor
                   : AppColors.playerXColor;
+              // AudioManager.instance.playLoseSound();
               emit(LoseState());
             } else {
               _result = 'Player B Wins';
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerOColor
                   : AppColors.playerXColor;
+              // AudioManager.instance.playWinSound();
               emit(PlayerBWins());
             }
           }
         } else if (gameplay.getGameStatus() == GameStatus.draw) {
           _result = 'Draw';
           _resultColor = AppColors.gridLineColor;
+          // AudioManager.instance.playLoseSound();
           emit(DrawState());
         }
         if (kDebugMode) {
