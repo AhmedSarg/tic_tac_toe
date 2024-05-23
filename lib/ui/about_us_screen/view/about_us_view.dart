@@ -77,47 +77,45 @@ class AboutUsView extends StatelessWidget {
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(12),
-                child: Row(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
-                        flex: 1,
-                        child: CircleAvatar(
-                          radius: 35,
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
                           backgroundImage: AssetImage(member.img),
-                        )),
-                    const VerticalDivider(
-                      indent: 2,
-                      endIndent: 2,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Text(
+                            member.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                    color: Theme.of(context).iconTheme.color),
+                          ),
+                        ),
+
+                        // const Expanded(flex: 1, child: FlutterLogo()),
+                        const Icon(
+                          Icons.chevron_right,
+                          size: 30,
+                        ),
+                      ],
                     ),
-// SizedBox(width: 8,),
-                    Expanded(
-                        flex: 6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              member.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                      color: Theme.of(context).iconTheme.color),
-                            ),
-                            Text(
-                              member.bio,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                      color: Theme.of(context).iconTheme.color),
-                            ),
-                          ],
-                        )),
-// const Expanded(flex: 1, child: FlutterLogo()),
-                    const Icon(
-                      Icons.chevron_right,
-                      size: 30,
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      member.bio,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(color: Theme.of(context).iconTheme.color),
                     ),
                   ],
                 ),
