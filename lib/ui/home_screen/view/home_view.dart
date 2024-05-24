@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tic_tac_toe/ui/about_us_screen/view/about_us_view.dart';
 import 'package:tic_tac_toe/ui/difficulty_screen/view/difficulty_screen.dart';
 import 'package:tic_tac_toe/ui/names_screen/view/names_screen.dart';
@@ -20,6 +21,18 @@ class HomeView extends StatelessWidget {
             'Tic Tac Toe',
             style: Theme.of(context).textTheme.headlineLarge,
             textAlign: TextAlign.center,
+          ).animate(
+            effects: [
+              TintEffect(
+                color: Theme.of(context).colorScheme.secondary,
+                duration: const Duration(seconds: 1),
+              ),
+              TintEffect(
+                color: Theme.of(context).colorScheme.primary,
+                delay: const Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
+              ),
+            ],
           ),
           const Spacer(flex: 2),
           SizedBox(
@@ -71,12 +84,30 @@ class HomeView extends StatelessWidget {
                   horizontal: 30,
                   vertical: 10,
                 ),
-                // shape: const CircleBorder(),
               ),
-              child: const FittedBox(
-                child: Icon(
+              child: FittedBox(
+                child: const Icon(
                   Icons.play_arrow_rounded,
                   size: 50,
+                ).animate(
+                  onInit: (anim) {
+                    anim.addListener(
+                      () {
+                        if (anim.isCompleted) {
+                          anim.reverse();
+                        } else if (anim.isDismissed) {
+                          anim.forward();
+                        }
+                      },
+                    );
+                  },
+                  effects: [
+                    const ScaleEffect(
+                      begin: Offset(1, 1),
+                      end: Offset(.8, .8),
+                      duration: Duration(seconds: 1),
+                    ),
+                  ],
                 ),
               ),
             ),

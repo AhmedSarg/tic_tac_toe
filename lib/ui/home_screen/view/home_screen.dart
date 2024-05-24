@@ -5,14 +5,13 @@ import 'package:tic_tac_toe/ui/home_screen/viewmodel/home_states.dart';
 import 'package:tic_tac_toe/ui/home_screen/viewmodel/home_viewmodel.dart';
 import 'package:tic_tac_toe/ui/resources/app_theme.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeViewModel(),
+      create: (context) => HomeViewModel()..start(),
       child: BlocBuilder<HomeViewModel, HomeStates>(
         builder: (context, state) {
           HomeViewModel viewModel = HomeViewModel.get(context);

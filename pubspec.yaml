@@ -42,6 +42,8 @@ dependencies:
   flutter_animate:
   flutter_svg:
   audioplayers: ^6.0.0
+  animated_text_kit: any
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
