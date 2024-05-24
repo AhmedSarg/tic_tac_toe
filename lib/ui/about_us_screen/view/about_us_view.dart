@@ -52,7 +52,7 @@ class AboutUsView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.transparent,
         shadowColor: AppColors.transparent,
-        title: const Text("About US"),
+        title: const Text("About Us"),
         centerTitle: true,
       ),
       body: _buildBody(),
@@ -70,7 +70,6 @@ class AboutUsView extends StatelessWidget {
     return Builder(builder: (context) {
       return SizedBox(
         width: double.infinity,
-// height: 100,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: InkWell(
@@ -93,15 +92,9 @@ class AboutUsView extends StatelessWidget {
                         Expanded(
                           child: Text(
                             member.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                    color: Theme.of(context).iconTheme.color),
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                         ),
-
-                        // const Expanded(flex: 1, child: FlutterLogo()),
                         const Icon(
                           Icons.chevron_right,
                           size: 30,
@@ -132,77 +125,76 @@ class AboutUsView extends StatelessWidget {
     AudioManager.instance.playProfile(member.bioMp3);
 
     showDialog(
-        context: context,
-        builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: PopScope(
-              canPop: true,
-              onPopInvoked: (flag) {
-                AudioManager.instance.stop();
-              },
-              child: AlertDialog(
-                insetPadding: EdgeInsets.zero,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                contentPadding: EdgeInsets.zero,
-                content: SizedBox(
-                  // height: MediaQuery.of(context).size.height * 0.5,
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        flex: 2,
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Image.asset(
-                              member.img,
-                              width: double.infinity,
-                              // height: double.infinity,
-                              fit: BoxFit.cover,
-                              alignment: FractionalOffset.topCenter,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: PopScope(
+            canPop: true,
+            onPopInvoked: (flag) {
+              AudioManager.instance.stop();
+            },
+            child: AlertDialog(
+              insetPadding: EdgeInsets.zero,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              contentPadding: EdgeInsets.zero,
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: Stack(
+                        alignment: Alignment.bottomLeft,
+                        children: [
+                          Image.asset(
+                            member.img,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            alignment: FractionalOffset.topCenter,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FittedBox(
                               child: Text(
                                 member.name,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
                                     .copyWith(
-                                        color:
-                                            Theme.of(context).iconTheme.color,
-                                        shadows: List.filled(
-                                          5,
-                                          const Shadow(
-                                            color:
-                                                AppColors.darkBackgroundColor,
-                                            blurRadius: 10,
-                                          ),
-                                        )),
+                                      color: Theme.of(context).iconTheme.color,
+                                      shadows: List.filled(
+                                        5,
+                                        const Shadow(
+                                          color: AppColors.darkBackgroundColor,
+                                          blurRadius: 10,
+                                        ),
+                                      ),
+                                    ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          member.bio,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  color: Theme.of(context).iconTheme.color),
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        member.bio,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(color: Theme.of(context).iconTheme.color),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

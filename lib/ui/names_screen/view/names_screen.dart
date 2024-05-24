@@ -7,8 +7,8 @@ import 'package:tic_tac_toe/ui/resources/assets_manager.dart';
 class NamesScreen extends StatelessWidget {
   const NamesScreen({super.key});
 
-  static String _xName = 'Human';
-  static String _oName = 'Human';
+  static String _xName = 'Player A';
+  static String _oName = 'Player B';
 
   static final FocusNode _xNameFocus = FocusNode();
   static final FocusNode _oNameFocus = FocusNode();
@@ -22,94 +22,82 @@ class NamesScreen extends StatelessWidget {
             padding: const EdgeInsets.all(50),
             child: Column(
               children: [
-                SizedBox(
-                  height: (MediaQuery.of(context).size.height - 100) * .7,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Type your Names',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                      Row(
-                        children: [
-                          const Text('Who will be '),
-                          Lottie.asset(
-                            AssetsManager.xLottie,
-                            repeat: false,
-                            width: 50,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        focusNode: _xNameFocus,
-                        onSubmitted: (v) {
-                          _xName = v;
-                          _oNameFocus.requestFocus();
-                        },
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(fontSize: 14),
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your name',
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
-                        children: [
-                          const Text('Who will be '),
-                          Lottie.asset(
-                            AssetsManager.oLottie,
-                            repeat: false,
-                            width: 30,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        focusNode: _oNameFocus,
-                        onSubmitted: (v) {
-                          _oName = v;
-                        },
-                        style: const TextStyle(fontSize: 14),
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your name',
-                        ),
-                      ),
-                    ],
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Type your Names',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    const Text('Who will be '),
+                    Lottie.asset(
+                      AssetsManager.xLottie,
+                      repeat: false,
+                      width: 50,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  focusNode: _xNameFocus,
+                  onSubmitted: (v) {
+                    _xName = v;
+                    _oNameFocus.requestFocus();
+                  },
+                  textInputAction: TextInputAction.next,
+                  style: const TextStyle(fontSize: 14),
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your name',
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    const Text('Who will be '),
+                    Lottie.asset(
+                      AssetsManager.oLottie,
+                      repeat: false,
+                      width: 30,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  focusNode: _oNameFocus,
+                  onSubmitted: (v) {
+                    _oName = v;
+                  },
+                  style: const TextStyle(fontSize: 14),
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your name',
+                  ),
+                ),
+                const SizedBox(height: 50),
                 SizedBox(
-                  height: (MediaQuery.of(context).size.height - 100) * .2,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          DataIntent.setPlayerAName = _xName;
-                          DataIntent.setPlayerBName = _oName;
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const GameScreen(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 70),
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      DataIntent.setPlayerAName = _xName;
+                      DataIntent.setPlayerBName = _oName;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GameScreen(),
                         ),
-                        child: Text(
-                          'Next',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
+                      padding: const EdgeInsets.symmetric(horizontal: 70),
+                    ),
+                    child: Text(
+                      'Next',
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ),
                 ),

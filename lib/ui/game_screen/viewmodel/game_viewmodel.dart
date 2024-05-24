@@ -98,8 +98,10 @@ class GameViewModel extends Cubit<GameStates> {
     }
   }
 
-  getComputerAnswer() {
-    AudioManager.instance.playMovementSound();
+  getComputerAnswer([bool playSound = true]) {
+    if (playSound) {
+      AudioManager.instance.playMovementSound();
+    }
     xoGamePlay.update();
     for (int ind = 0; ind < _items.length; ind++) {
       int i2 = vecToMat(ind).$1;
@@ -181,7 +183,7 @@ class GameViewModel extends Cubit<GameStates> {
               // AudioManager.instance.playWinSound();
               emit(WinState());
             } else {
-              _result = 'Player A Wins';
+              _result = '${DataIntent.getPlayerAName ?? 'Player A'} Wins';
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerXColor
                   : AppColors.playerOColor;
@@ -198,7 +200,7 @@ class GameViewModel extends Cubit<GameStates> {
               // AudioManager.instance.playLoseSound();
               emit(LoseState());
             } else {
-              _result = 'Player B Wins';
+              _result = '${DataIntent.getPlayerBName ?? 'Player B'} Wins';
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerOColor
                   : AppColors.playerXColor;
@@ -223,7 +225,8 @@ class GameViewModel extends Cubit<GameStates> {
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        getComputerAnswer();
+        getComputerAnswer(
+            _startPlayer == Player.playerB || _gameMode == GameMode.watch);
       },
     );
   }

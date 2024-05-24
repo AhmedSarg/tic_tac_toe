@@ -53,6 +53,12 @@ class AppTheme {
         fontFamily: GoogleFonts.gabarito().fontFamily,
         fontWeight: FontWeight.w900,
       ),
+      displayMedium: TextStyle(
+        fontSize: 28,
+        fontFamily: GoogleFonts.abel().fontFamily,
+        fontWeight: FontWeight.w400,
+        color: AppColors.backgroundColor,
+      ),
       labelLarge: TextStyle(
         color: AppColors.buttonTextColor,
         fontFamily: GoogleFonts.zcoolKuaiLe().fontFamily,
@@ -89,8 +95,13 @@ class AppTheme {
         disabledForegroundColor: AppColors.disabledTextColor,
       ),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       color: AppColors.gridLineColor,
+      titleTextStyle: TextStyle(
+        fontSize: 24,
+        fontFamily: GoogleFonts.gabarito().fontFamily,
+        color: AppColors.gridLineColor,
+      ),
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       primary: AppColors.gridLineColor,
@@ -196,6 +207,12 @@ class AppTheme {
             ),
           ],
         ),
+        displayMedium: TextStyle(
+          fontSize: 28,
+          fontFamily: GoogleFonts.abel().fontFamily,
+          fontWeight: FontWeight.w400,
+          color: AppColors.backgroundColor,
+        ),
         labelLarge: TextStyle(
           color: AppColors.darkButtonTextColor,
           fontFamily: GoogleFonts.zcoolKuaiLe().fontFamily,
@@ -232,8 +249,13 @@ class AppTheme {
           disabledForegroundColor: AppColors.darkDisabledTextColor,
         ),
       ),
-      appBarTheme: const AppBarTheme(
-        color: AppColors.darkGridLineColor,
+      appBarTheme: AppBarTheme(
+        color: AppColors.gridLineColor,
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontFamily: GoogleFonts.gabarito().fontFamily,
+          color: AppColors.darkGridLineColor,
+        ),
       ),
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: AppColors.darkGridLineColor,

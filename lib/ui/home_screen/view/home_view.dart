@@ -19,6 +19,7 @@ class HomeView extends StatelessWidget {
           Text(
             'Tic Tac Toe',
             style: Theme.of(context).textTheme.headlineLarge,
+            textAlign: TextAlign.center,
           ),
           const Spacer(flex: 2),
           SizedBox(
@@ -57,7 +58,7 @@ class HomeView extends StatelessWidget {
                           gameMode: GameMode.friend,
                         ),
                         ChoiceButton(
-                          text: 'Watch a Game',
+                          text: 'Watch a Game (Ai vs Ai)',
                           gameMode: GameMode.watch,
                         ),
                       ],

@@ -364,83 +364,74 @@ class GameActions extends StatelessWidget {
       child: BlocBuilder<GameViewModel, GameStates>(
         builder: (context, state) {
           GameViewModel viewModel = GameViewModel.get(context);
-          return viewModel.xoGamePlay.getGameStatus() == GameStatus.ongoing
-              ? Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 50),
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: viewModel.restart,
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+          return FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FittedBox(
+                  child: Text(
+                    viewModel.xoGamePlay.getGameStatus() == GameStatus.ongoing
+                        ? ' '
+                        : viewModel.result,
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          color: viewModel.resultColor,
                         ),
-                      ),
-                      child: Text(
-                        'Restart',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ),
                   ),
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+                const SizedBox(height: 20),
+                Column(
                   children: [
-                    FittedBox(
-                      child: Text(
-                        viewModel.result,
-                        style:
-                            Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                  color: viewModel.resultColor,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      child: viewModel.xoGamePlay.getGameStatus() ==
+                              GameStatus.ongoing
+                          ? null
+                          : ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                      ),
+                              ),
+                              child: Text(
+                                'Main Menu',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                            ),
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            child: Text(
-                              'Main Menu',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: viewModel.xoGamePlay.getGameStatus() ==
+                                GameStatus.ongoing
+                            ? viewModel.restart
+                            : viewModel.playAgain,
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: viewModel.playAgain,
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            child: Text(
-                              'Play Again',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                          ),
+                        child: Text(
+                          viewModel.xoGamePlay.getGameStatus() ==
+                                  GameStatus.ongoing
+                              ? 'Restart'
+                              : 'Play Again',
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
-                      ],
+                      ),
                     ),
                   ],
-                );
+                ),
+              ],
+            ),
+          );
         },
       ),
     );
