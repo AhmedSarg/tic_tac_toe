@@ -152,6 +152,8 @@ class GameViewModel extends Cubit<GameStates> {
     } else if (_gameMode == GameMode.friend) {
       _playerPersonMode = PersonMode.human;
       _opponentPersonMode = PersonMode.human;
+      _playerMode = PlayerMode.x;
+      _startPlayer = Player.playerA;
     } else {
       _playerPersonMode = PersonMode.machineHard;
       _opponentPersonMode = PersonMode.machineHard;
