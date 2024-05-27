@@ -38,19 +38,19 @@ class DataIntent {
 
   static String? _playerAName;
 
-  static set setPlayerAName(String playerAName) {
+  static set setPlayerAName(String? playerAName) {
     _playerAName = playerAName;
   }
 
-  static String? get getPlayerAName => _playerAName;
+  static String get getPlayerAName => _playerAName ?? 'Player A ';
 
   //--------------------------------------------------------------------------
 
   static String? _playerBName;
 
-  static set setPlayerBName(String playerBName) {
+  static set setPlayerBName(String? playerBName) {
     _playerBName = playerBName;
   }
 
-  static String? get getPlayerBName => _playerBName;
+  static String get getPlayerBName => _playerBName ?? 'Player B';
 }

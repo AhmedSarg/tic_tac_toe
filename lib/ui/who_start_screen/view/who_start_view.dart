@@ -16,7 +16,12 @@ class WhoStartView extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          const Spacer(flex: 3),
+          const Spacer(flex: 1),
+          const Text(
+            'Who Will Start?',
+            textAlign: TextAlign.center,
+          ),
+          const Spacer(flex: 2),
           const WhoStartsRow(),
           const Spacer(flex: 2),
           BlocBuilder<WhoStartViewModel, WhoStartStates>(

@@ -7,9 +7,6 @@ import 'package:tic_tac_toe/ui/resources/assets_manager.dart';
 class NamesScreen extends StatelessWidget {
   const NamesScreen({super.key});
 
-  static String _xName = 'Player A';
-  static String _oName = 'Player B';
-
   static final FocusNode _xNameFocus = FocusNode();
   static final FocusNode _oNameFocus = FocusNode();
 
@@ -42,10 +39,19 @@ class NamesScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  controller:
+                      TextEditingController(text: DataIntent.getPlayerAName),
                   focusNode: _xNameFocus,
                   onSubmitted: (v) {
-                    _xName = v;
+                    _xNameFocus.unfocus();
                     _oNameFocus.requestFocus();
+                  },
+                  onChanged: (v) {
+                    if (v.isNotEmpty) {
+                      DataIntent.setPlayerAName = v;
+                    } else {
+                      DataIntent.setPlayerAName = null;
+                    }
                   },
                   textInputAction: TextInputAction.next,
                   style: const TextStyle(fontSize: 14),
@@ -66,9 +72,18 @@ class NamesScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  controller:
+                      TextEditingController(text: DataIntent.getPlayerBName),
                   focusNode: _oNameFocus,
                   onSubmitted: (v) {
-                    _oName = v;
+                    _oNameFocus.unfocus();
+                  },
+                  onChanged: (v) {
+                    if (v.isNotEmpty) {
+                      DataIntent.setPlayerBName = v;
+                    } else {
+                      DataIntent.setPlayerBName = null;
+                    }
                   },
                   style: const TextStyle(fontSize: 14),
                   decoration: const InputDecoration(
@@ -80,8 +95,6 @@ class NamesScreen extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      DataIntent.setPlayerAName = _xName;
-                      DataIntent.setPlayerBName = _oName;
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

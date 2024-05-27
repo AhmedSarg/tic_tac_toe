@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tic_tac_toe/ui/choice_screen/viewmodel/choice_states.dart';
 import 'package:tic_tac_toe/ui/choice_screen/viewmodel/choice_viewmodel.dart';
-import 'package:tic_tac_toe/ui/game_screen/view/game_screen.dart';
 import 'package:tic_tac_toe/ui/resources/app_colors.dart';
 import 'package:tic_tac_toe/ui/who_start_screen/view/who_start_screen.dart';
 
@@ -16,7 +15,12 @@ class ChoiceView extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          const Spacer(flex: 3),
+          const Spacer(flex: 1),
+          const Text(
+            'Choose Your Symbol',
+            textAlign: TextAlign.center,
+          ),
+          const Spacer(flex: 2),
           const ChoicesRow(),
           const Spacer(flex: 2),
           BlocBuilder<ChoiceViewModel, ChoiceStates>(
