@@ -185,7 +185,7 @@ class GameViewModel extends Cubit<GameStates> {
               // AudioManager.instance.playWinSound();
               emit(WinState());
             } else {
-              _result = '${DataIntent.getPlayerAName ?? 'Player A'} Wins';
+              _result = '${DataIntent.getPlayerAName} Wins';
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerXColor
                   : AppColors.playerOColor;
@@ -202,7 +202,7 @@ class GameViewModel extends Cubit<GameStates> {
               // AudioManager.instance.playLoseSound();
               emit(LoseState());
             } else {
-              _result = '${DataIntent.getPlayerBName ?? 'Player B'} Wins';
+              _result = '${DataIntent.getPlayerBName} Wins';
               _resultColor = _playerMode == PlayerMode.x
                   ? AppColors.playerOColor
                   : AppColors.playerXColor;
