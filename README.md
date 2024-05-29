@@ -43,11 +43,11 @@ The project was tested successfully on platforms such that Android, Windows and 
 # Single Player Mode
 --> You can select the difficulty level of AI: (Easy, Medium, Hard)
 
-        Easy:       AI plays random movements.
+Easy:       AI plays random movements.
 
-        Medium:     AI plays according to pre-stored and handled cases.
+Medium:     AI plays according to pre-stored and handled cases.
         
-        Hard:       AI simulates the human thinking based on priorities cases.
+Hard:       AI simulates the human thinking based on priorities cases.
 
 --> You can select your Symbol 'X' or  'O'.
 
