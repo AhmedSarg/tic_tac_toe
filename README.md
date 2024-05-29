@@ -55,35 +55,46 @@ The project was tested successfully on platforms such that Android, Windows and 
 
 # PVP Mode
 --> The game lets you enter both of your names, 'Player A' and 'Player B'.
+
 --> The 1st player plays with Symbol 'X' while the second player plays with Symbol 'O'.
+
 --> The Game also display the names pf players and indicate their turns.
 
 # Watch Mode
 --> To increase fun, The game support AI sv AI mode
+
 --> The 1st AI plays with Symbol 'X' while the second AI with Symbol 'O'.
 
 # Sound Effects
-The game also support the sound effects.
-When the user select a tile to be filled with 'X' or 'O', a sound effect is played immediately.
+The game also support the sound effects,
+when the user select a tile to be filled with 'X' or 'O', a sound effect is played immediately.
 
 # UI
 The game has a high user experience due to pretty and user-friendly design:-
+
 --> The game displays the player name or the word 'Bot' if it was AI.
+
 --> The game let the players to enter their names.
+
 --> The Game displays the score of game, example: (0-0) or (2-0).
+
 --> The game indicate the current the current turn.
+
 --> The game has Light Theme and Dark Theme.
 
 # About us Screens
 The game has about us screen, which used to avail information about the game developers.
+
 Also, When you press on a list tile, The app will speak about the developer tile you pressed on.
 
 # Conclusion
 Dear Amit Learning,
+
 We ,Youssef and Ahmed, has satisfied your Judging Criteria as far as we can.
 And also, we have added more features like 'Watch mode', 'Themes','About us Screen' and 'Sounds'
 It is so hard to add all of these additional features during the faculty projects and exams.
 We are looking forward to win a good place in the competition.
+
 Sincerely, Youssef and Ahmed.
 
 
